@@ -1,0 +1,120 @@
+:root {
+  --white: #fff;
+  --neutral-100: #f5f5f5;
+  --neutral-300: #d4d4d4;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --indigo-50: #eef2ff;
+  --indigo-500: #6366f1;
+  --indigo-700: #4338ca;
+  --main-color1: #ff4b2b;
+  --main-color2: blue;
+}
+.flight-path {
+  position: absolute;
+    top: 40%;
+    left: 1%;
+    width: 5%;
+    transform: translateY(50%);
+    pointer-events: none;
+    z-index: 5;
+}
+
+.path-line {
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    #0d6efd,
+    #4dabf7,
+    #0d6efd
+  );
+}
+
+.plane-icon {
+  position: absolute;
+  top: -10px;
+  right: 0;
+  color: #0d6efd;
+  font-size: 22px;
+  transform: rotate(45deg);
+
+  animation: flyPlane 1s ease-in-out;
+}
+
+@keyframes flyPlane {
+  0% {
+    transform: translateX(-15px) rotate(45deg) scale(0.8);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(0) rotate(45deg) scale(1);
+    opacity: 1;
+  }
+}
+body {
+  background-color: var(--neutral-100);
+  font-family: "Inter", sans-serif;
+  line-height: 1.5;
+}
+
+.wrapper {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+select {
+  min-width: 200px;
+  border: 1px solid var(--neutral-300);
+  border-radius: 0.5rem;
+  background-color: var(--white);
+  color: var(--gray-700);
+  padding: 0.75rem;
+  outline: none;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+select:focus {
+  border-color: var(--indigo-500);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.16);
+}
+
+select option {
+  color: var(--gray-600);
+  text-align: left;
+}
+
+.custom-option {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: space-between;
+}
+
+.no-support {
+  align-content: center;
+  background-color: #000d;
+  color: var(--white);
+  display: grid;
+  gap: 1em;
+  inset: 0;
+  place-items: center;
+  position: fixed;
+  z-index: 10;
+  text-align: center;
+  padding: 1rem;
+
+  @supports (appearance: base-select) {
+    display: none;
+  }
+}
+.b-none {
+  border: none;
+}
