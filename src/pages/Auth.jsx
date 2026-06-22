@@ -203,13 +203,6 @@ function Auth({ isOpen, onClose, showHero = true }) {
       return;
     }
 
-    if (!isEmailSignUp) {
-      alert(
-        "Phone registration is not supported yet. Please register with email.",
-      );
-      return;
-    }
-
     const payload = {
       username: `${registerData.firstName} ${registerData.lastName}`.trim(),
       email: registerData.email,

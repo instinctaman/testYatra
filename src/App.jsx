@@ -12,6 +12,7 @@ import Auth from "./pages/Auth";
 import Landing from "./pages/Landing";
 import Flight from "./pages/Flight";
 import Navbar from "./components/Navbar";
+import AirSearchUI from "./pages/AirSearchUI";
 
 function App() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -29,6 +30,7 @@ function App() {
         <Route path="/flight" element={<Flight />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/air-search-ui" element={<AirSearchUI />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
 

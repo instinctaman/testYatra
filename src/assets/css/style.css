@@ -56,7 +56,7 @@
 
 .slide-left:hover {
     transform: translateX(10px);
-    color: var(--main-color1);
+    color: white;
 }
 
 .slide-left:hover::after {
@@ -141,6 +141,6 @@
 }
 
 .card{
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  /* -webkit-backdrop-filter: blur(10px); */
+  /* backdrop-filter: blur(10px); */
 }

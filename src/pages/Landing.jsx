@@ -2,6 +2,8 @@ import { useState } from "react";
 import "../index.css";
 import "../assets/css/test.css";
 import heroImage2 from "../assets/images/img2.jpg";
+import { NavLink } from "react-router-dom";
+// import AirSearchUI from "./AirSearchUI";
 
 function Landing({ onLoginClick }) {
   const [active, setActive] = useState("Flights");
@@ -211,13 +213,17 @@ function Landing({ onLoginClick }) {
             </select>
           </label>
 
-          <button
+          {/* <button
             type="button"
             className="landing-search-btn"
             onClick={handleSearch}
           >
             Search
-          </button>
+          </button> */}
+          <span className="landing-search-btn">
+          <NavLink className="nav-link" to="/air-search-ui">
+            Dashboard
+          </NavLink></span>
         </div>
 
         <div className="landing-popular-routes">
