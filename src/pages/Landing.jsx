@@ -80,7 +80,7 @@ function Landing({ onLoginClick }) {
         <div className="landing-hero-inner">
           <div className="landing-hero-copy">
             <span className="landing-kicker">Yatra B2B travel desk</span>
-            <h1>Book smarter trips for every route, team, and budget.</h1>
+            <h1 className="text-white">Book smarter trips for every route, team, and budget.</h1>
             <p>
               Search flights, hotels, trains, cabs, and packages from one clean
               workspace built for faster travel planning.
@@ -221,10 +221,16 @@ function Landing({ onLoginClick }) {
             Search
           </button> */}
           <span className="landing-search-btn">
+<<<<<<< HEAD
             <NavLink className="nav-link" to="/air-search-ui">
               Search
             </NavLink>
           </span>
+=======
+          <NavLink className="btn landing-primary-btn" to="/air-search-ui">
+            Search
+          </NavLink></span>
+>>>>>>> 64680bc0f88043dff9653c1e2da220b6c826f4a7
         </div>
 
         <div className="landing-popular-routes">

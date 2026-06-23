@@ -1438,14 +1438,17 @@ body,
 }
 
 .landing-search-btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
   min-width: 132px;
   padding: 0 24px;
   color: #fff;
+<<<<<<< HEAD
   background: var(--indigo-700);
+=======
+}
+.landing-search-btn .landing-primary-btn{
+  padding: 15px 40px;
+  color: #fff;
+>>>>>>> 64680bc0f88043dff9653c1e2da220b6c826f4a7
 }
 
 .landing-popular-routes {
