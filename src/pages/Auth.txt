@@ -28,7 +28,6 @@ function Auth({ isOpen, onClose, showHero = true }) {
   const isEmailLogin = loginContactMethod === "email";
   const isContactVerified = otpStatus === "verified";
   const modalOpen = typeof isOpen === "boolean" ? isOpen : isAuthOpen;
-
   const closeAuth = () => {
     if (onClose) {
       onClose();
@@ -198,6 +197,9 @@ function Auth({ isOpen, onClose, showHero = true }) {
       alert("Password and Confirm Password do not match");
       return;
     }
+    console.log("otpStatus =", otpStatus);
+    console.log("isContactVerified =", isContactVerified);
+    console.log("emailVerificationStatus =", emailVerificationStatus);
 
     if (!isContactVerified) {
       alert(isEmailSignUp ? "Please verify your email" : "Please verify OTP");

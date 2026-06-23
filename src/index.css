@@ -1427,10 +1427,12 @@ body,
 }
 
 .landing-search-btn {
-  min-width: 132px;
-  padding: 0 24px;
+  padding: 0px 24px;
   color: #fff;
-  background: #0d6efd;
+}
+.landing-search-btn .landing-primary-btn{
+  padding: 15px 40px;
+  color: #fff;
 }
 
 .landing-popular-routes {
