@@ -1,9 +1,12 @@
-import { NavLink } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { NavLink, Link } from "react-router-dom";
+import { useState, useEffect, useRef,  } from "react";
 import "../assets/css/style.css";
-import TravelLogo from "./TravelLogo";
+// import TravelLogo from "./TravelLogo";
+import imgLight from '../assets/images/logo/logo-white.png';
+import imgDark from '../assets/images/logo/logo-dark.png';
 
 export default function Navbar({ onLoginClick }) {
+  
   const [isScrolled, setIsScrolled] = useState(false);
   const [hideNavbar, setHideNavbar] = useState(false);
   const lastScrollTop = useRef(0);
@@ -38,11 +41,7 @@ export default function Navbar({ onLoginClick }) {
 
           <a className="navbar-brand" href="#">
             <div className="logo">
-              <TravelLogo
-                bgColor={isScrolled ? "#FF0000" : "#FFFFFF"}
-                iconColor={isScrolled ? "#FFFFFF" : "#FF0000"}
-                textColor={isScrolled ? "#0F1B5F" : "#FFFFFF"}
-              />
+              <img src={isScrolled ? imgDark : imgLight} alt="" />
             </div>
           </a>
           {/* <!-- Right Side Controls --> */}
@@ -77,9 +76,9 @@ export default function Navbar({ onLoginClick }) {
           >
             <ul className="navbar-nav mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#">
+                <Link to="/" className="nav-link active" aria-current="page" href="#">
                   Home
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="#">

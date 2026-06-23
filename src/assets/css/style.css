@@ -81,7 +81,7 @@
     padding: 12px 20px;
     border-radius: 25px;
     background-color: var(--main-color1);
-    color: black;
+    color: white;
     border: none;
     transition: all 0.3s ease;
 }
@@ -141,6 +141,6 @@
 }
 
 .card{
-  /* -webkit-backdrop-filter: blur(10px); */
-  /* backdrop-filter: blur(10px); */
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
