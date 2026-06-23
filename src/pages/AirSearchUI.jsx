@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 
-import "../assets/ui/assets/css/animate.css";
+import "../assets/ui/assets/css/animate.css"; 
 import "../assets/ui/assets/css/iconsax.css";
 import "../assets/ui/assets/plugins/fontawesome/css/all.min.css";
 import "../assets/ui/assets/plugins/tabler-icons/tabler-icons.css";

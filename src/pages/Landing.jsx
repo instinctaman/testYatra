@@ -221,9 +221,10 @@ function Landing({ onLoginClick }) {
             Search
           </button> */}
           <span className="landing-search-btn">
-          <NavLink className="nav-link" to="/air-search-ui">
-            Dashboard
-          </NavLink></span>
+            <NavLink className="nav-link" to="/air-search-ui">
+              Search
+            </NavLink>
+          </span>
         </div>
 
         <div className="landing-popular-routes">

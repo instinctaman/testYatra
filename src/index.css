@@ -1241,8 +1241,10 @@ body,
 }
 
 .landing-hero-copy h1 {
+  color: white;
   margin: 14px 0 18px;
   font-size: clamp(2.45rem, 5vw, 4.8rem);
+  font-weight: 600;
   line-height: 1.02;
 }
 
@@ -1328,17 +1330,18 @@ body,
 .landing-service-tabs {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 8px;
+  gap: 30px;
   margin-bottom: 20px;
 }
 
 .landing-service-tabs button {
-  min-height: 78px;
-  display: grid;
-  place-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 7px;
+  padding-block: 5px;
   border: 1px solid #e7edf6;
-  border-radius: 8px;
+  border-radius: 10px;
   background: #f8fbff;
   color: #52627a;
   font-weight: 800;
@@ -1442,7 +1445,7 @@ body,
   min-width: 132px;
   padding: 0 24px;
   color: #fff;
-  background: #0d6efd;
+  background: var(--indigo-700);
 }
 
 .landing-popular-routes {
