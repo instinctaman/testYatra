@@ -3641,3 +3641,7 @@ body,
     min-height: 11.875rem;
   }
 }
+.text-center, .text-end, .ms-auto .s-btn {
+  padding: 10px 50px;
+  border-radius: 25px !important;
+}

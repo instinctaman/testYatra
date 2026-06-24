@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import api from "../services/api";
 
 import "../assets/ui/assets/css/animate.css";
 import "../assets/ui/assets/css/iconsax.css";
@@ -22,10 +23,9 @@ import userSixteen from "../assets/ui/assets/img/users/user-16.jpg";
 import FilterPanel from "../NewFiles/FilterPanel";
 import CategoryCards from "../cards/CategoryCards";
 
-import vistara from '../assets/images/vistara.jfif';
-import indigo from '../assets/images/indigo.jfif';
-import airIndia from '../assets/images/airIndia.jfif';
-
+import vistara from "../assets/images/vistara.jfif";
+import indigo from "../assets/images/indigo.jfif";
+import airIndia from "../assets/images/airIndia.jfif";
 
 const airports = [
   {
@@ -97,7 +97,7 @@ const routeChips = [
 
 const fareTypes = ["Regular", "Student", "Senior Citizen", "Corporate"];
 
-const flights = [
+const sampleFlights = [
   {
     id: "vistara-214",
     airline: "Vistara",
@@ -343,19 +343,20 @@ function TravelersDropdown({ travelers, onChange, cabin, onCabinChange }) {
 function FlightCard({ flight, selected, onSelect }) {
   return (
     <article className={`airkit-flight-card ${selected ? "selected" : ""}`}>
-
       <div className="airkit-flight-body">
         <div className="airkit-flight-top">
           <div className="d-flex align-items-center justify-content-between gap-3">
             <div>
               <img src={flight.mark} alt="" className="airkit-airline-mark" />
               <h5>{flight.airline}</h5>
-              <p className="mb-0">{flight.code}</p>
+              <p className="mb-0">
+                {flight.origin} → {flight.destination}
+              </p>
             </div>
 
             <div className="airkit-route-line">
               <div>
-                <strong>{flight.depart}</strong>
+                <strong> {flight.departure}</strong>
                 <span>{flight.from}</span>
               </div>
               <div className=" flight-loc d-flex align-items-center justify-content-center">
@@ -363,28 +364,27 @@ function FlightCard({ flight, selected, onSelect }) {
                 <span className="arrow-icon">
                   <i className="isax isax-arrow-right-1" aria-hidden="true"></i>
                 </span>
-                <span className="loc-name">{flight.stops}</span>
+                <span className="loc-name">Stops: {flight.stops}</span>
               </div>
               <div>
-                <strong>{flight.arrive}</strong>
+                <strong>{flight.arrival}</strong>
                 <span>{flight.to}</span>
               </div>
             </div>
             <div className="airkit-flight-footer">
               <div className="airkit-price">
-                <strong>{flight.price}</strong>
+                <strong>₹ {flight.price}</strong>
                 <small>per traveller</small>
               </div>
               <button
                 type="button"
                 className="btn btn-primary"
-                onClick={() => onSelect(flight.id)}
+                onClick={() => onSelect(flight.result_index)}
               >
                 {selected ? "Selected" : "Book Now"}
               </button>
             </div>
           </div>
-
         </div>
       </div>
     </article>
@@ -392,6 +392,8 @@ function FlightCard({ flight, selected, onSelect }) {
 }
 
 export default function AirSearchUI() {
+  const [flights, setFlights] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [fromAirport, setFromAirport] = useState(airports[0]);
   const [toAirport, setToAirport] = useState(airports[1]);
   const [tripType, setTripType] = useState("Round Trip");
@@ -404,13 +406,18 @@ export default function AirSearchUI() {
   });
   const [cabin, setCabin] = useState("Economy");
   const [activeFare, setActiveFare] = useState("Regular");
-  const [selectedFlight, setSelectedFlight] = useState(flights[0].id);
+  const [selectedFlight, setSelectedFlight] = useState(null);
 
-  const totalTravelers = travelers.adults + travelers.children + travelers.infants;
-  const selectedFlightData = useMemo(
-    () => flights.find((flight) => flight.id === selectedFlight) ?? flights[0],
-    [selectedFlight]
-  );
+  const totalTravelers =
+    travelers.adults + travelers.children + travelers.infants;
+  const selectedFlightData = useMemo(() => {
+    if (!flights.length) return null;
+
+    return (
+      flights.find((flight) => flight.result_index === selectedFlight) ||
+      flights[0]
+    );
+  }, [flights, selectedFlight]);
 
   const swapAirports = () => {
     setFromAirport(toAirport);
@@ -431,6 +438,32 @@ export default function AirSearchUI() {
       setToAirport(nextTo);
     }
   };
+  const searchFlights = async () => {
+    try {
+      setLoading(true);
+
+      const payload = {
+        origin: fromAirport.code,
+        destination: toAirport.code,
+
+        departure_date: departureDate,
+
+        adults: travelers.adults,
+        children: travelers.children,
+        infants: travelers.infants,
+      };
+
+      const response = await api.post("/flight/search", payload);
+
+      setFlights(response.data);
+    } catch (error) {
+      console.error(error);
+
+      alert(error.response?.data?.message || "Flight search failed");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <main className="airkit-page">
@@ -441,7 +474,6 @@ export default function AirSearchUI() {
         }}
       >
         <div className="container">
-
           <div className="row align-items-end g-4">
             <div className="col-lg-7">
               <nav aria-label="breadcrumb" className="mb-3">
@@ -463,7 +495,8 @@ export default function AirSearchUI() {
               <h1>Search smarter fares across every route.</h1>
               <p>
                 Compare live-style flight options, cabin choices, baggage, and
-                trip rules in a polished workspace built from the current UI kit.
+                trip rules in a polished workspace built from the current UI
+                kit.
               </p>
             </div>
             <div className="col-lg-5">
@@ -474,7 +507,11 @@ export default function AirSearchUI() {
                   <strong>
                     {fromAirport.city} to {toAirport.city}
                   </strong>
-                  <small>{selectedFlightData.price} onwards</small>
+                  <small>
+                    {selectedFlightData
+                      ? `₹${selectedFlightData.price} onwards`
+                      : "Search flights"}
+                  </small>
                 </div>
               </div>
             </div>
@@ -494,7 +531,10 @@ export default function AirSearchUI() {
                         type="button"
                         className={`nav-link ${item.active ? "active" : ""}`}
                       >
-                        <i className={`isax ${item.icon} me-2`} aria-hidden="true"></i>
+                        <i
+                          className={`isax ${item.icon} me-2`}
+                          aria-hidden="true"
+                        ></i>
                         {item.title}
                       </button>
                     </li>
@@ -507,7 +547,10 @@ export default function AirSearchUI() {
                 >
                   <div className="airkit-trip-tabs">
                     {["One Way", "Round Trip", "Multi City"].map((type) => (
-                      <label key={type} className={tripType === type ? "active" : ""}>
+                      <label
+                        key={type}
+                        className={tripType === type ? "active" : ""}
+                      >
                         <input
                           type="radio"
                           name="tripType"
@@ -521,7 +564,6 @@ export default function AirSearchUI() {
 
                   <div className="d-lg-flex align-items-stretch">
                     <div className="d-flex form-info">
-                  
                       <AirportDropdown
                         id="from"
                         label="From"
@@ -536,7 +578,10 @@ export default function AirSearchUI() {
                           onClick={swapAirports}
                           aria-label="Swap departure and destination"
                         >
-                          <i className="isax isax-arrow-swap-horizontal" aria-hidden="true"></i>
+                          <i
+                            className="isax isax-arrow-swap-horizontal"
+                            aria-hidden="true"
+                          ></i>
                         </button>
                       </div>
 
@@ -555,7 +600,9 @@ export default function AirSearchUI() {
                           type="date"
                           className="form-control"
                           value={departureDate}
-                          onChange={(event) => setDepartureDate(event.target.value)}
+                          onChange={(event) =>
+                            setDepartureDate(event.target.value)
+                          }
                         />
                         <p className="fs-12 mb-0">Flexible fares enabled</p>
                       </div>
@@ -569,7 +616,9 @@ export default function AirSearchUI() {
                             type="date"
                             className="form-control"
                             value={returnDate}
-                            onChange={(event) => setReturnDate(event.target.value)}
+                            onChange={(event) =>
+                              setReturnDate(event.target.value)
+                            }
                           />
                           <p className="fs-12 mb-0">Best return matrix</p>
                         </div>
@@ -581,10 +630,18 @@ export default function AirSearchUI() {
                         cabin={cabin}
                         onCabinChange={setCabin}
                       />
-                      <button type="submit" className="btn btn-primary rounded">
-                      <i className="isax isax-search-normal me-2" aria-hidden="true"></i>
-                      Search
-                    </button>
+                      <button
+                        type="button"
+                        className="btn btn-primary rounded"
+                        onClick={searchFlights}
+                        disabled={loading}
+                      >
+                        <i
+                          className="isax isax-search-normal me-2"
+                          aria-hidden="true"
+                        ></i>
+                        {loading ? "Searching..." : "Search"}
+                      </button>
                     </div>
                   </div>
                 </form>
@@ -633,9 +690,12 @@ export default function AirSearchUI() {
             <div className="col-xl-9 col-lg-8">
               <div className="airkit-results-heading">
                 <div>
-                  <span className="badge bg-primary mb-2">Recommended flights</span>
+                  <span className="badge bg-primary mb-2">
+                    Recommended flights
+                  </span>
                   <h2>
-                    {fromAirport.code} to {toAirport.code}, {totalTravelers} traveller
+                    {fromAirport.code} to {toAirport.code}, {totalTravelers}{" "}
+                    traveller
                     {totalTravelers > 1 ? "s" : ""}
                   </h2>
                   <p>
@@ -651,7 +711,10 @@ export default function AirSearchUI() {
                     aria-expanded="false"
                   >
                     Sort by: Best Value
-                    <i className="isax isax-arrow-down-1 ms-2" aria-hidden="true"></i>
+                    <i
+                      className="isax isax-arrow-down-1 ms-2"
+                      aria-hidden="true"
+                    ></i>
                   </button>
                   <ul className="dropdown-menu dropdown-menu-end">
                     <li>
@@ -673,18 +736,22 @@ export default function AirSearchUI() {
                 </div>
               </div>
 
-
               <div className="airkit-flight-list">
-                {flights.map((flight) => (
-                  <FlightCard
-                    key={flight.id}
-                    flight={flight}
-                    selected={selectedFlight === flight.id}
-                    onSelect={setSelectedFlight}
-                  />
-                ))}
+                {flights.length > 0 ? (
+                  flights.map((flight, index) => (
+                    <FlightCard
+                      key={index}
+                      flight={flight}
+                      selected={selectedFlight === flight.result_index}
+                      onSelect={setSelectedFlight}
+                    />
+                  ))
+                ) : (
+                  <div className="alert alert-info">
+                    Search flights to view results.
+                  </div>
+                )}
               </div>
-
             </div>
           </div>
         </div>
@@ -735,9 +802,5 @@ export default function AirSearchUI() {
       </nav>
       {/* <!-- /Pagination --> */}
     </main>
-
-
-
   );
-
 }
