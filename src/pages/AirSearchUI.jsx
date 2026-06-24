@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 
-import "../assets/ui/assets/css/animate.css"; 
+import "../assets/ui/assets/css/animate.css";
 import "../assets/ui/assets/css/iconsax.css";
 import "../assets/ui/assets/plugins/fontawesome/css/all.min.css";
 import "../assets/ui/assets/plugins/tabler-icons/tabler-icons.css";
@@ -13,15 +13,19 @@ import flightImage from "../assets/ui/assets/img/menu/flight.jpg";
 import hotelImage from "../assets/ui/assets/img/menu/hotel.jpg";
 import tourImage from "../assets/ui/assets/img/menu/tour.jpg";
 import cruiseImage from "../assets/ui/assets/img/menu/cruise.jpg";
-// import homeOneImage from "../assets/ui/assets/img/menu/home-01.jpg";
-// import homeSevenImage from "../assets/ui/assets/img/menu/home-07.jpg";
-// import homeTwelveImage from "../assets/ui/assets/img/menu/home-12.jpg";
-import homeOneImage from "../assets/images/plane.jpg";
-import homeSevenImage from "../assets/images/plane.jpg";
-import homeTwelveImage from "../assets/images/plane.jpg";
+// import homeOneImage from "../assets/ui/assets/img/menu/aeroplane.jfif";
+import homeSevenImage from "../assets/ui/assets/img/menu/home-07.jpg";
+import homeTwelveImage from "../assets/ui/assets/img/menu/home-12.jpg";
 import userFourteen from "../assets/ui/assets/img/users/user-14.jpg";
 import userFifteen from "../assets/ui/assets/img/users/user-15.jpg";
 import userSixteen from "../assets/ui/assets/img/users/user-16.jpg";
+import FilterPanel from "../NewFiles/FilterPanel";
+import CategoryCards from "../cards/CategoryCards";
+
+import vistara from '../assets/images/vistara.jfif';
+import indigo from '../assets/images/indigo.jfif';
+import airIndia from '../assets/images/airIndia.jfif';
+
 
 const airports = [
   {
@@ -98,7 +102,7 @@ const flights = [
     id: "vistara-214",
     airline: "Vistara",
     code: "UK 214",
-    mark: "UK",
+    mark: vistara,
     from: "DEL",
     to: "BOM",
     depart: "06:30",
@@ -110,14 +114,14 @@ const flights = [
     refund: "Free meal",
     badge: "Best value",
     accent: "bg-success",
-    image: homeOneImage,
+    // image: homeOneImage,
     avatar: userFourteen,
   },
   {
     id: "indigo-821",
     airline: "IndiGo",
     code: "6E 821",
-    mark: "6E",
+    mark: indigo,
     from: "DEL",
     to: "BOM",
     depart: "09:10",
@@ -129,14 +133,14 @@ const flights = [
     refund: "Flex fare",
     badge: "Fastest",
     accent: "bg-info",
-    image: homeSevenImage,
+    // image: homeOneImage,
     avatar: userFifteen,
   },
   {
     id: "airindia-907",
     airline: "Air India",
     code: "AI 907",
-    mark: "AI",
+    mark: airIndia,
     from: "DEL",
     to: "BOM",
     depart: "13:40",
@@ -148,7 +152,7 @@ const flights = [
     refund: "Priority bag",
     badge: "Premium",
     accent: "bg-primary",
-    image: homeTwelveImage,
+    // image: homeOneImage,
     avatar: userSixteen,
   },
 ];
@@ -339,70 +343,48 @@ function TravelersDropdown({ travelers, onChange, cabin, onCabinChange }) {
 function FlightCard({ flight, selected, onSelect }) {
   return (
     <article className={`airkit-flight-card ${selected ? "selected" : ""}`}>
-      <div className="airkit-flight-media">
-        <img src={flight.image} alt={`${flight.airline} route visual`} />
-        <span className={`badge ${flight.accent}`}>{flight.badge}</span>
-      </div>
 
       <div className="airkit-flight-body">
         <div className="airkit-flight-top">
-          <div className="d-flex align-items-center gap-3">
-            <span className="airkit-airline-mark">{flight.mark}</span>
+          <div className="d-flex align-items-center justify-content-between gap-3">
             <div>
+              <img src={flight.mark} alt="" className="airkit-airline-mark" />
               <h5>{flight.airline}</h5>
               <p className="mb-0">{flight.code}</p>
             </div>
-          </div>
-          <div className="d-flex align-items-center">
-            <span className="avatar avatar-md flex-shrink-0 me-2">
-              <img src={flight.avatar} className="rounded-circle" alt="" />
-            </span>
-            <span className="badge badge-warning badge-xs text-gray-9 fs-13 fw-medium">
-              4.8
-            </span>
-          </div>
-        </div>
 
-        <div className="airkit-route-line">
-          <div>
-            <strong>{flight.depart}</strong>
-            <span>{flight.from}</span>
+            <div className="airkit-route-line">
+              <div>
+                <strong>{flight.depart}</strong>
+                <span>{flight.from}</span>
+              </div>
+              <div className=" flight-loc d-flex align-items-center justify-content-center">
+                <span className="loc-name">{flight.duration}</span>
+                <span className="arrow-icon">
+                  <i className="isax isax-arrow-right-1" aria-hidden="true"></i>
+                </span>
+                <span className="loc-name">{flight.stops}</span>
+              </div>
+              <div>
+                <strong>{flight.arrive}</strong>
+                <span>{flight.to}</span>
+              </div>
+            </div>
+            <div className="airkit-flight-footer">
+              <div className="airkit-price">
+                <strong>{flight.price}</strong>
+                <small>per traveller</small>
+              </div>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => onSelect(flight.id)}
+              >
+                {selected ? "Selected" : "Book Now"}
+              </button>
+            </div>
           </div>
-          <div className="flight-loc d-flex align-items-center justify-content-center">
-            <span className="loc-name">{flight.duration}</span>
-            <span className="arrow-icon">
-              <i className="isax isax-arrow-right-1" aria-hidden="true"></i>
-            </span>
-            <span className="loc-name">{flight.stops}</span>
-          </div>
-          <div>
-            <strong>{flight.arrive}</strong>
-            <span>{flight.to}</span>
-          </div>
-        </div>
 
-        <div className="airkit-flight-footer">
-          <div className="d-flex align-items-center flex-wrap gap-3">
-            <span>
-              <i className="isax isax-bag-tick-2 me-1" aria-hidden="true"></i>
-              {flight.baggage}
-            </span>
-            <span>
-              <i className="isax isax-shield-tick me-1" aria-hidden="true"></i>
-              {flight.refund}
-            </span>
-          </div>
-          <div className="airkit-price">
-            <strong>{flight.price}</strong>
-            <small>per traveller</small>
-          </div>
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={() => onSelect(flight.id)}
-          >
-            {selected ? "Selected" : "Book Now"}
-          </button>
         </div>
       </div>
     </article>
@@ -539,6 +521,7 @@ export default function AirSearchUI() {
 
                   <div className="d-lg-flex align-items-stretch">
                     <div className="d-flex form-info">
+                  
                       <AirportDropdown
                         id="from"
                         label="From"
@@ -598,12 +581,11 @@ export default function AirSearchUI() {
                         cabin={cabin}
                         onCabinChange={setCabin}
                       />
-                    </div>
-
-                    <button type="submit" className="btn btn-primary search-btn rounded">
+                      <button type="submit" className="btn btn-primary rounded">
                       <i className="isax isax-search-normal me-2" aria-hidden="true"></i>
                       Search
                     </button>
+                    </div>
                   </div>
                 </form>
 
@@ -639,102 +621,13 @@ export default function AirSearchUI() {
         </div>
       </section>
 
-      <section className="airkit-service-strip">
-        <div className="container">
-          <div className="row g-3">
-            {services.map((item) => (
-              <div className="col-xl-3 col-md-6" key={item.title}>
-                <div className={`hotel-type-item d-flex align-items-center ${item.active ? "active" : ""}`}>
-                  <span className="avatar avatar-lg">
-                    <img src={item.image} className="rounded-circle" alt="" />
-                  </span>
-                  <div className="ms-2">
-                    <h6 className="fs-16 fw-medium">{item.title}</h6>
-                    <p className="fs-14">{item.count}</p>
-                  </div>
-                  <i className={`isax ${item.icon} ms-auto`} aria-hidden="true"></i>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <CategoryCards />
 
       <section className="content airkit-results-section">
         <div className="container">
           <div className="row">
             <aside className="col-xl-3 col-lg-4">
-              <div className="card filter-sidebar airkit-filter-card">
-                <div className="card-header d-flex align-items-center justify-content-between">
-                  <h5>Filters</h5>
-                  <button type="button" className="fs-14 link-primary">
-                    Reset
-                  </button>
-                </div>
-                <div className="card-body p-0">
-                  <div className="p-3 border-bottom">
-                    <label className="form-label fs-16">Price range</label>
-                    <input
-                      type="range"
-                      className="form-range"
-                      min="4000"
-                      max="12000"
-                      defaultValue="7600"
-                    />
-                    <div className="d-flex justify-content-between fs-14">
-                      <span>INR 4k</span>
-                      <span>INR 12k</span>
-                    </div>
-                  </div>
-
-                  <div className="accordion accordion-list" id="airkitFilters">
-                    {filterGroups.map((group) => (
-                      <div className="accordion-item border-bottom p-3" key={group.id}>
-                        <div className="accordion-header">
-                          <button
-                            type="button"
-                            className="accordion-button p-0"
-                            data-bs-toggle="collapse"
-                            data-bs-target={`#airkit-${group.id}`}
-                            aria-expanded="true"
-                            aria-controls={`airkit-${group.id}`}
-                          >
-                            <i className={`isax ${group.icon} me-2 text-primary`} aria-hidden="true"></i>
-                            {group.title}
-                          </button>
-                        </div>
-                        <div
-                          id={`airkit-${group.id}`}
-                          className="accordion-collapse collapse show"
-                          data-bs-parent="#airkitFilters"
-                        >
-                          <div className="accordion-body pt-2">
-                            {group.items.map((item, index) => (
-                              <div
-                                className="form-checkbox form-check d-flex align-items-center mt-2"
-                                key={item}
-                              >
-                                <input
-                                  className="form-check-input ms-0 mt-0"
-                                  type="checkbox"
-                                  id={`filter-${group.id}-${index}`}
-                                  defaultChecked={index === 0}
-                                />
-                                <label
-                                  className="form-check-label ms-2"
-                                  htmlFor={`filter-${group.id}-${index}`}
-                                >
-                                  {item}
-                                </label>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
+              <FilterPanel />
             </aside>
 
             <div className="col-xl-9 col-lg-8">
@@ -780,6 +673,7 @@ export default function AirSearchUI() {
                 </div>
               </div>
 
+
               <div className="airkit-flight-list">
                 {flights.map((flight) => (
                   <FlightCard
@@ -791,50 +685,6 @@ export default function AirSearchUI() {
                 ))}
               </div>
 
-              <div className="row g-4 mt-2">
-                <div className="col-md-4">
-                  <article className="place-item airkit-promo-card">
-                    <div className="place-img">
-                      <img src={homeOneImage} className="img-fluid" alt="Airport lounge" />
-                      <div className="fav-item">
-                        <span className="badge bg-info">Add-on</span>
-                      </div>
-                    </div>
-                    <div className="place-content">
-                      <h5 className="mb-1">Lounge access</h5>
-                      <p>Bundle premium lounge access before checkout.</p>
-                    </div>
-                  </article>
-                </div>
-                <div className="col-md-4">
-                  <article className="place-item airkit-promo-card">
-                    <div className="place-img">
-                      <img src={homeSevenImage} className="img-fluid" alt="Hotel room" />
-                      <div className="fav-item">
-                        <span className="badge bg-success">Deal</span>
-                      </div>
-                    </div>
-                    <div className="place-content">
-                      <h5 className="mb-1">Stay combo</h5>
-                      <p>Pair flights with trusted city hotels.</p>
-                    </div>
-                  </article>
-                </div>
-                <div className="col-md-4">
-                  <article className="place-item airkit-promo-card">
-                    <div className="place-img">
-                      <img src={homeTwelveImage} className="img-fluid" alt="Travel assistance" />
-                      <div className="fav-item">
-                        <span className="badge bg-primary">Support</span>
-                      </div>
-                    </div>
-                    <div className="place-content">
-                      <h5 className="mb-1">Priority desk</h5>
-                      <p>Get guided changes for business trips.</p>
-                    </div>
-                  </article>
-                </div>
-              </div>
             </div>
           </div>
         </div>

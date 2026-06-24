@@ -13,12 +13,15 @@ import Landing from "./pages/Landing";
 import Flight from "./pages/Flight";
 import Navbar from "./components/Navbar";
 import AirSearchUI from "./pages/AirSearchUI";
+import FilterPanel from "./NewFiles/FilterPanel";
 
 function App() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
-  
+
 
   return (
+
+    // <FilterPanel />
     <BrowserRouter>
       <Navbar onLoginClick={() => setIsLoginOpen(true)} />
 

@@ -1,3 +1,6 @@
+html {
+  font-size: 14px;
+}
 
 :root {
   --white: #fff;
@@ -12,18 +15,19 @@
   --main-color1: #ff4b2b;
   --main-color2: #ff4b2b;
 }
+
 .flight-path {
   position: absolute;
-    top: 40%;
-    left: 1%;
-    width: 5%;
-    transform: translateY(50%);
-    pointer-events: none;
-    z-index: 5;
+  top: 40%;
+  left: 1%;
+  width: 5%;
+  transform: translateY(50%);
+  pointer-events: none;
+  z-index: 5;
 }
 
 .path-line {
-  height: 2px;
+  height: 0.125rem; /* 2px */
   background: linear-gradient(
     to right,
     #0d6efd,
@@ -34,18 +38,17 @@
 
 .plane-icon {
   position: absolute;
-  top: -10px;
+  top: -0.625rem; /* -10px */
   right: 0;
   color: #0d6efd;
-  font-size: 22px;
+  font-size: 1.375rem; /* 22px */
   transform: rotate(45deg);
-
   animation: flyPlane 1s ease-in-out;
 }
 
 @keyframes flyPlane {
   0% {
-    transform: translateX(-15px) rotate(45deg) scale(0.8);
+    transform: translateX(-0.9375rem) rotate(45deg) scale(0.8); /* -15px */
     opacity: 0;
   }
 
@@ -58,6 +61,7 @@
     opacity: 1;
   }
 }
+
 body {
   background-color: var(--neutral-100);
   font-family: "Inter", sans-serif;
@@ -65,26 +69,26 @@ body {
 }
 
 .wrapper {
-  align-items: center;
   display: flex;
   justify-content: center;
+  align-items: center;
   min-height: 100vh;
 }
 
 select {
-  min-width: 200px;
-  border: 1px solid var(--neutral-300);
-  border-radius: 0.5rem;
+  min-width: 12.5rem; /* 200px */
+  border: 0.0625rem solid var(--neutral-300); /* 1px */
+  border-radius: 0.5rem; /* already rem */
   background-color: var(--white);
   color: var(--gray-700);
-  padding: 0.75rem;
+  padding: 0.75rem; /* already rem */
   outline: none;
   transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 select:focus {
   border-color: var(--indigo-500);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.16);
+  box-shadow: 0 0 0 0.1875rem rgba(99, 102, 241, 0.16); /* 3px */
 }
 
 select option {
@@ -93,22 +97,25 @@ select option {
 }
 
 .custom-option {
-  align-items: center;
   display: flex;
-  gap: 0.5rem;
+  align-items: center;
   justify-content: space-between;
+  gap: 0.5rem; /* already rem */
 }
 
 .no-support {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+
+  display: grid;
+  place-items: center;
   align-content: center;
+  gap: 1em;
+
   background-color: #000d;
   color: var(--white);
-  display: grid;
-  gap: 1em;
-  inset: 0;
-  place-items: center;
-  position: fixed;
-  z-index: 10;
+
   text-align: center;
   padding: 1rem;
 
@@ -116,6 +123,7 @@ select option {
     display: none;
   }
 }
+
 .b-none {
   border: none;
 }

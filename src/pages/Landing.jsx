@@ -5,6 +5,7 @@ import heroImage2 from "../assets/images/img2.jpg";
 import { NavLink } from "react-router-dom";
 // import AirSearchUI from "./AirSearchUI";
 
+
 function Landing({ onLoginClick }) {
   const [active, setActive] = useState("Flights");
   const [tripType, setTripType] = useState("One Way");
@@ -221,16 +222,9 @@ function Landing({ onLoginClick }) {
             Search
           </button> */}
           <span className="landing-search-btn">
-<<<<<<< HEAD
-            <NavLink className="nav-link" to="/air-search-ui">
-              Search
-            </NavLink>
-          </span>
-=======
           <NavLink className="btn landing-primary-btn" to="/air-search-ui">
             Search
           </NavLink></span>
->>>>>>> 64680bc0f88043dff9653c1e2da220b6c826f4a7
         </div>
 
         <div className="landing-popular-routes">
