@@ -5,6 +5,7 @@ import heroImage2 from "../assets/images/img2.jpg";
 import { NavLink } from "react-router-dom";
 // import AirSearchUI from "./AirSearchUI";
 
+
 function Landing({ onLoginClick }) {
   const [active, setActive] = useState("Flights");
   const [tripType, setTripType] = useState("One Way");

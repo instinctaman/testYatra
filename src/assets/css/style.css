@@ -17,7 +17,7 @@
     transition: color 0.3s ease;
 }
 
-.nav-link.active {
+.nav-item .nav-link.active {
     color: var(--main-color1) !important;
 }
 .nav-link:focus, .nav-link:hover {
