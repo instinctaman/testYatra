@@ -13,6 +13,8 @@ import Landing from "./pages/Landing";
 import Flight from "./pages/Flight";
 import Navbar from "./components/Navbar";
 import AirSearchUI from "./pages/AirSearchUI";
+import FlightSearch from "./pages/FlightSearch";
+
 
 function App() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -32,6 +34,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/air-search-ui" element={<AirSearchUI />} />
         <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="/air-search-ui1" element={<FlightSearch />} />
       </Routes>
 
       <Auth

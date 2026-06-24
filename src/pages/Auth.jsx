@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 // import DOMPurify from "../../node_modules/dompurify";
@@ -103,11 +103,14 @@ function Auth({ isOpen, onClose, showHero = true }) {
       alert("Please enter your email first");
       return;
     }
+    setSendingOtp(true);
 
     try {
       await api.post("/send-email-otp", {
         email: registerData.email,
       });
+
+      setOtpTimer(30);
 
       setOtpType("email");
       setOtpStatus("sent");
@@ -116,7 +119,13 @@ function Auth({ isOpen, onClose, showHero = true }) {
 
       alert("OTP sent to email");
     } catch (error) {
-      alert(error.response?.data?.detail || "Failed to send OTP");
+      alert(
+        error.response?.data?.message ||
+          error.response?.data?.detail ||
+          "Failed to send OTP",
+      );
+    } finally {
+      setSendingOtp(false);
     }
   };
 
@@ -130,6 +139,8 @@ function Auth({ isOpen, onClose, showHero = true }) {
       await api.post("/send-mobile-otp", {
         mobile: registerData.mobile,
       });
+
+      setOtpTimer(30);
 
       setOtpType("phone");
       setOtpStatus("sent");
@@ -169,6 +180,19 @@ function Auth({ isOpen, onClose, showHero = true }) {
       alert(error.response?.data?.message || "Invalid OTP");
     }
   };
+
+  //opt Timer
+  const [sendingOtp, setSendingOtp] = useState(false);
+  const [otpTimer, setOtpTimer] = useState(0);
+  useEffect(() => {
+    if (otpTimer <= 0) return;
+
+    const interval = setInterval(() => {
+      setOtpTimer((prev) => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [otpTimer]);
 
   // Register Inputs
 
@@ -412,11 +436,17 @@ function Auth({ isOpen, onClose, showHero = true }) {
                               type="button"
                               className="btn auth-inline-btn"
                               onClick={handleEmailVerification}
-                              disabled={otpStatus === "verified"}
+                              disabled={
+                                otpStatus === "verified" || otpTimer > 0
+                              }
                             >
-                              {otpStatus === "verified"
-                                ? "Verified"
-                                : "Send OTP"}
+                              {sendingOtp
+                                ? "Sending..."
+                                : otpStatus === "verified"
+                                  ? "Verified"
+                                  : otpTimer > 0
+                                    ? `Resend in ${otpTimer}s`
+                                    : "Send OTP"}
                             </button>
                             {otpStatus === "sent" && (
                               <div className="inline-action-field">
@@ -468,9 +498,13 @@ function Auth({ isOpen, onClose, showHero = true }) {
                               onClick={handleSendOtp}
                               disabled={otpStatus === "verified"}
                             >
-                              {otpStatus === "verified"
-                                ? "Verified"
-                                : "Send OTP"}
+                              {sendingOtp
+                                ? "Sending..."
+                                : otpStatus === "verified"
+                                  ? "Verified"
+                                  : otpTimer > 0
+                                    ? `Resend in ${otpTimer}s`
+                                    : "Send OTP"}
                             </button>
                           </div>
                           {otpStatus === "sent" && (
