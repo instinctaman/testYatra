@@ -1,9 +1,4 @@
-import {
-  BrowserRouter,
-  Navigate,
-  Route,
-  Routes,
-} from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { useState } from "react";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
@@ -14,13 +9,12 @@ import Flight from "./pages/Flight";
 import Navbar from "./components/Navbar";
 import AirSearchUI from "./pages/AirSearchUI";
 import FlightSearch from "./pages/FlightSearch";
+import FlightResults from "./pages/FlightResults";
 
 function App() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
 
-
   return (
-
     // <FilterPanel />
     <BrowserRouter>
       <Navbar onLoginClick={() => setIsLoginOpen(true)} />
@@ -36,6 +30,7 @@ function App() {
         <Route path="/air-search-ui" element={<AirSearchUI />} />
         <Route path="*" element={<Navigate to="/" replace />} />
         <Route path="/air-search-ui1" element={<FlightSearch />} />
+        <Route path="/flight-results" element={<FlightResults />} />
       </Routes>
 
       <Auth

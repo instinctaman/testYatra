@@ -3088,6 +3088,10 @@ body,
   background-position: center;
   background-size: cover;
 }
+.airkit-hero1 {
+  background-position: center;
+  background-size: cover;
+}
 
 .airkit-hero .container {
   display: flex;
@@ -3191,7 +3195,7 @@ body,
 }
 
 .airkit-search-wrap {
-  margin-top: -5.5rem;
+  padding-top: 100px;
   position: relative;
   z-index: 2;
 }
@@ -3627,7 +3631,7 @@ body,
 
 @media (max-width: 35.9988rem) {
   .airkit-search-wrap {
-    margin-top: -4.375rem;
+    padding-top: 4rem;
   }
 
   .airkit-trip-tabs label,
@@ -3644,4 +3648,7 @@ body,
 .text-center, .text-end, .ms-auto .s-btn {
   padding: 10px 50px;
   border-radius: 25px !important;
+}
+.top-search {
+  padding: 80px 0px 45px 0px;
 }

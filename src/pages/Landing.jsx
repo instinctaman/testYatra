@@ -1,11 +1,11 @@
 import { useMemo, useState } from "react";
 import api from "../services/api";
+import { useNavigate } from "react-router-dom";
 
-import "../assets/ui/assets/css/animate.css";
 import "../assets/ui/assets/css/iconsax.css";
 import "../assets/ui/assets/plugins/fontawesome/css/all.min.css";
-import "../assets/ui/assets/plugins/tabler-icons/tabler-icons.css";
-import "../assets/ui/assets/css/meanmenu.css";
+
+import "../assets/css/test.css";
 import "../assets/ui/assets/css/style.css";
 
 import heroBg from "../assets/ui/assets/img/bg/breadcrumb-04.jpg";
@@ -391,7 +391,8 @@ function FlightCard({ flight, selected, onSelect }) {
   );
 }
 
-export default function AirSearchUI() {
+export default function Landing() {
+  const navigate = useNavigate();
   const [flights, setFlights] = useState([]);
   const [loading, setLoading] = useState(false);
   const [fromAirport, setFromAirport] = useState(airports[0]);
@@ -438,44 +439,33 @@ export default function AirSearchUI() {
       setToAirport(nextTo);
     }
   };
-  const searchFlights = async () => {
-    try {
-      setLoading(true);
-
-      const payload = {
+  const searchFlights = () => {
+    navigate("/air-search-ui", {
+      state: {
         origin: fromAirport.code,
         destination: toAirport.code,
-
-        departure_date: departureDate,
-
+        departureDate,
+        returnDate,
         adults: travelers.adults,
         children: travelers.children,
         infants: travelers.infants,
-      };
-
-      const response = await api.post("/flight/search", payload);
-
-      setFlights(response.data);
-    } catch (error) {
-      console.error(error);
-
-      alert(error.response?.data?.message || "Flight search failed");
-    } finally {
-      setLoading(false);
-    }
+        cabin,
+        tripType,
+      },
+    });
   };
 
   return (
     <main className="airkit-page">
       <section
-        className="airkit-hero"
+        className="airkit-hero1"
         style={{
           backgroundImage: `linear-gradient(115deg, rgba(7, 21, 45, 0.86), rgba(8, 79, 111, 0.54)), url(${heroBg})`,
         }}
       >
-        <div className="container">
-          <div className="row align-items-end g-4">
-            <div className="col-lg-7">
+        <section className="airkit-search-wrap">
+          <div className="container">
+            <div className="d-flex justify-content-between">
               <nav aria-label="breadcrumb" className="mb-3">
                 <ol className="breadcrumb airkit-breadcrumb mb-0">
                   <li className="breadcrumb-item">
@@ -489,189 +479,195 @@ export default function AirSearchUI() {
               <span className="badge bg-warning text-gray-9 mb-3">
                 B2B Home
               </span>
-              <h1>Book smarter trips for every route, team, and budget.</h1>
-              <p>
-                Search flights, hotels, trains, cabs, and packages from one
-                clean workspace built for faster travel planning.Search flights,
-                hotels, trains, cabs, and packages from one clean workspace
-                built for faster travel planning.
-              </p>
             </div>
-            <div className="col-lg-5">
-              <div className="landing-stats" aria-label="Travel highlights">
-                <article>
-                  <strong>24/7</strong>
-                  <span>Booking support</span>
-                </article>
-                <article>
-                  <strong>450+</strong>
-                  <span>Partner routes</span>
-                </article>
-                <article>
-                  <strong>12%</strong>
-                  <span>Flight savings</span>
-                </article>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="airkit-search-wrap">
-        <div className="container">
-          <div className="card airkit-search-card">
-            <div className="card-body">
-              <div className="banner-form">
-                <ul className="nav mb-3 justify-content-center" aria-label="Travel services">
-                  {services.map((item) => (
-                    <li key={item.title}>
-                      <button
-                        type="button"
-                        className={`nav-link ${item.active ? "active" : ""}`}
-                      >
-                        <i
-                          className={`isax ${item.icon} me-2`}
-                          aria-hidden="true"
-                        ></i>
-                        {item.title}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-
-                <form
-                  className="airkit-form"
-                  onSubmit={(event) => event.preventDefault()}
-                >
-                  <div className="airkit-trip-tabs">
-                    {["One Way", "Round Trip", "Multi City"].map((type) => (
-                      <label
-                        key={type}
-                        className={tripType === type ? "active" : ""}
-                      >
-                        <input
-                          type="radio"
-                          name="tripType"
-                          checked={tripType === type}
-                          onChange={() => setTripType(type)}
-                        />
-                        {type}
-                      </label>
-                    ))}
-                    
-                    <div className="ms-auto">
-                      <button
-                        type="button"
-                        className="btn btn-primary s-btn rounded m-3"
-                        onClick={searchFlights}
-                        disabled={loading}
-                      >
-                        <i
-                          className="isax isax-search-normal me-2"
-                          aria-hidden="true"
-                        ></i>
-                        {loading ? "Searching..." : "Search"}
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="d-lg-flex align-items-stretch">
-                    <div className="d-flex form-info">
-                      <AirportDropdown
-                        id="from"
-                        label="From"
-                        airport={fromAirport}
-                        onSelect={setFromAirport}
-                      />
-
-                      <div className="airkit-swap-holder">
+            <div className="card airkit-search-card">
+              <div className="card-body">
+                <div className="banner-form">
+                  <ul
+                    className="nav mb-3 justify-content-center"
+                    aria-label="Travel services"
+                  >
+                    {services.map((item) => (
+                      <li key={item.title}>
                         <button
                           type="button"
-                          className="airkit-swap-btn"
-                          onClick={swapAirports}
-                          aria-label="Swap departure and destination"
+                          className={`nav-link ${item.active ? "active" : ""}`}
                         >
                           <i
-                            className="isax isax-arrow-swap-horizontal"
+                            className={`isax ${item.icon} me-2`}
                             aria-hidden="true"
                           ></i>
+                          {item.title}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <form
+                    className="airkit-form"
+                    onSubmit={(event) => event.preventDefault()}
+                  >
+                    <div className="airkit-trip-tabs">
+                      {["One Way", "Round Trip", "Multi City"].map((type) => (
+                        <label
+                          key={type}
+                          className={tripType === type ? "active" : ""}
+                        >
+                          <input
+                            type="radio"
+                            name="tripType"
+                            checked={tripType === type}
+                            onChange={() => setTripType(type)}
+                          />
+                          {type}
+                        </label>
+                      ))}
+
+                      <div className="ms-auto">
+                        <button
+                          type="button"
+                          className="btn btn-primary s-btn rounded m-3"
+                          onClick={searchFlights}
+                          disabled={loading}
+                        >
+                          <i
+                            className="isax isax-search-normal me-2"
+                            aria-hidden="true"
+                          ></i>
+                          {loading ? "Searching..." : "Search"}
                         </button>
                       </div>
+                    </div>
 
-                      <AirportDropdown
-                        id="to"
-                        label="To"
-                        airport={toAirport}
-                        onSelect={setToAirport}
-                      />
-
-                      <div className="form-item">
-                        <label className="form-label fs-14 text-default mb-1">
-                          Departure
-                        </label>
-                        <input
-                          type="date"
-                          className="form-control"
-                          value={departureDate}
-                          onChange={(event) =>
-                            setDepartureDate(event.target.value)
-                          }
+                    <div className="d-lg-flex align-items-stretch">
+                      <div className="d-flex form-info">
+                        <AirportDropdown
+                          id="from"
+                          label="From"
+                          airport={fromAirport}
+                          onSelect={setFromAirport}
                         />
-                        <p className="fs-12 mb-0">Flexible fares enabled</p>
-                      </div>
 
-                      {tripType === "Round Trip" && (
+                        <div className="airkit-swap-holder">
+                          <button
+                            type="button"
+                            className="airkit-swap-btn"
+                            onClick={swapAirports}
+                            aria-label="Swap departure and destination"
+                          >
+                            <i
+                              className="isax isax-arrow-swap-horizontal"
+                              aria-hidden="true"
+                            ></i>
+                          </button>
+                        </div>
+
+                        <AirportDropdown
+                          id="to"
+                          label="To"
+                          airport={toAirport}
+                          onSelect={setToAirport}
+                        />
+
                         <div className="form-item">
                           <label className="form-label fs-14 text-default mb-1">
-                            Return
+                            Departure
                           </label>
                           <input
                             type="date"
                             className="form-control"
-                            value={returnDate}
+                            value={departureDate}
                             onChange={(event) =>
-                              setReturnDate(event.target.value)
+                              setDepartureDate(event.target.value)
                             }
                           />
-                          <p className="fs-12 mb-0">Best return matrix</p>
+                          <p className="fs-12 mb-0">Flexible fares enabled</p>
                         </div>
-                      )}
 
-                      <TravelersDropdown
-                        travelers={travelers}
-                        onChange={setTravelers}
-                        cabin={cabin}
-                        onCabinChange={setCabin}
-                      />
+                        {tripType === "Round Trip" && (
+                          <div className="form-item">
+                            <label className="form-label fs-14 text-default mb-1">
+                              Return
+                            </label>
+                            <input
+                              type="date"
+                              className="form-control"
+                              value={returnDate}
+                              onChange={(event) =>
+                                setReturnDate(event.target.value)
+                              }
+                            />
+                            <p className="fs-12 mb-0">Best return matrix</p>
+                          </div>
+                        )}
+
+                        <TravelersDropdown
+                          travelers={travelers}
+                          onChange={setTravelers}
+                          cabin={cabin}
+                          onCabinChange={setCabin}
+                        />
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="airkit-fare-row">
-                    <span>Fare type</span>
-                    {fareTypes.map((fare) => (
+                    <div className="airkit-fare-row">
+                      <span>Fare type</span>
+                      {fareTypes.map((fare) => (
+                        <button
+                          type="button"
+                          key={fare}
+                          className={activeFare === fare ? "active" : ""}
+                          onClick={() => setActiveFare(fare)}
+                        >
+                          {fare}
+                        </button>
+                      ))}
+                    </div>
+                  </form>
+
+                  <div className="airkit-route-chips">
+                    <span>Popular</span>
+                    {routeChips.map(([from, to]) => (
                       <button
                         type="button"
-                        key={fare}
-                        className={activeFare === fare ? "active" : ""}
-                        onClick={() => setActiveFare(fare)}
+                        key={`${from}-${to}`}
+                        onClick={() => setRoute(from, to)}
                       >
-                        {fare}
+                        {from} to {to}
                       </button>
                     ))}
                   </div>
-                </form>
-
-                <div className="airkit-route-chips">
-                  <span>Popular</span>
-                  {routeChips.map(([from, to]) => (
-                    <button
-                      type="button"
-                      key={`${from}-${to}`}
-                      onClick={() => setRoute(from, to)}
-                    >
-                      {from} to {to}
-                    </button>
-                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <div className="airkit-hero">
+          <div className="container">
+            <div className="row align-items-end g-4">
+              <div className="col-lg-7">
+                <h1>Book smarter trips for every route, team, and budget.</h1>
+                <p>
+                  Search flights, hotels, trains, cabs, and packages from one
+                  clean workspace built for faster travel planning.Search
+                  flights, hotels, trains, cabs, and packages from one clean
+                  workspace built for faster travel planning.
+                </p>
+              </div>
+              <div className="col-lg-5">
+                <div className="landing-stats" aria-label="Travel highlights">
+                  <article>
+                    <strong>24/7</strong>
+                    <span>Booking support</span>
+                  </article>
+                  <article>
+                    <strong>450+</strong>
+                    <span>Partner routes</span>
+                  </article>
+                  <article>
+                    <strong>12%</strong>
+                    <span>Flight savings</span>
+                  </article>
                 </div>
               </div>
             </div>

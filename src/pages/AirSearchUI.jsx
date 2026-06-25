@@ -1,12 +1,7 @@
 import { useMemo, useState } from "react";
 import api from "../services/api";
-
-import "../assets/ui/assets/css/animate.css";
-import "../assets/ui/assets/css/iconsax.css";
-import "../assets/ui/assets/plugins/fontawesome/css/all.min.css";
-import "../assets/ui/assets/plugins/tabler-icons/tabler-icons.css";
-import "../assets/ui/assets/css/meanmenu.css";
-import "../assets/ui/assets/css/style.css";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 import heroBg from "../assets/ui/assets/img/bg/breadcrumb-04.jpg";
 // import brandLogo from "../assets/ui/assets/img/logo-dark.svg";
@@ -347,8 +342,13 @@ function FlightCard({ flight, selected, onSelect }) {
         <div className="airkit-flight-top">
           <div className="d-flex align-items-center justify-content-between gap-3">
             <div>
-              <img src={flight.mark} alt="" className="airkit-airline-mark" />
+              <div className="airkit-airline-logo">
+                <i className="bi bi-airplane-fill"></i>
+              </div>
+              <small>Flight: {flight.flight_number}</small>
+
               <h5>{flight.airline}</h5>
+
               <p className="mb-0">
                 {flight.origin} → {flight.destination}
               </p>
@@ -356,26 +356,47 @@ function FlightCard({ flight, selected, onSelect }) {
 
             <div className="airkit-route-line">
               <div>
-                <strong> {flight.departure}</strong>
-                <span>{flight.from}</span>
+                <strong>
+                  {new Date(flight.departure).toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </strong>
+
+                <span>{flight.origin}</span>
               </div>
-              <div className=" flight-loc d-flex align-items-center justify-content-center">
-                <span className="loc-name">{flight.duration}</span>
+
+              <div className="flight-loc d-flex align-items-center justify-content-center">
+                <span className="loc-name">{flight.duration} min</span>
+
                 <span className="arrow-icon">
                   <i className="isax isax-arrow-right-1" aria-hidden="true"></i>
                 </span>
-                <span className="loc-name">Stops: {flight.stops}</span>
+
+                <span className="loc-name">
+                  {flight.stops === 0 ? "Non Stop" : `${flight.stops} Stop`}
+                </span>
               </div>
+
               <div>
-                <strong>{flight.arrival}</strong>
-                <span>{flight.to}</span>
+                <strong>
+                  {new Date(flight.arrival).toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </strong>
+
+                <span>{flight.destination}</span>
               </div>
             </div>
+
             <div className="airkit-flight-footer">
               <div className="airkit-price">
                 <strong>₹ {flight.price}</strong>
-                <small>per traveller</small>
+
+                <small>{flight.seats} seats left</small>
               </div>
+
               <button
                 type="button"
                 className="btn btn-primary"
@@ -385,6 +406,20 @@ function FlightCard({ flight, selected, onSelect }) {
               </button>
             </div>
           </div>
+
+          <hr />
+
+          <div className="d-flex gap-4">
+            <small>
+              🧳 Baggage:
+              {flight.baggage}
+            </small>
+
+            <small>
+              🎒 Cabin:
+              {flight.cabin_baggage}
+            </small>
+          </div>
         </div>
       </div>
     </article>
@@ -392,90 +427,94 @@ function FlightCard({ flight, selected, onSelect }) {
 }
 
 export default function AirSearchUI() {
-  const [flights, setFlights] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [fromAirport, setFromAirport] = useState(airports[0]);
-  const [toAirport, setToAirport] = useState(airports[1]);
-  const [tripType, setTripType] = useState("Round Trip");
-  const [departureDate, setDepartureDate] = useState("2026-07-12");
-  const [returnDate, setReturnDate] = useState("2026-07-18");
-  const [travelers, setTravelers] = useState({
-    adults: 1,
-    children: 0,
-    infants: 0,
-  });
-  const [cabin, setCabin] = useState("Economy");
-  const [activeFare, setActiveFare] = useState("Regular");
+  const location = useLocation();
+  const searchData = location.state || {};
+  const [airlineFilter, setAirlineFilter] = useState("");
+  const [stopFilter, setStopFilter] = useState("all");
+  const [sortBy, setSortBy] = useState("");
+  const tripType = searchData?.tripType || "oneway";
+  const cabin = searchData?.cabin || "Economy";
+  const origin = searchData?.origin || "";
+  const destination = searchData?.destination || "";
+  const departureDate = searchData?.departureDate || "";
+  const returnDate = searchData?.returnDate || "";
+  const adults = searchData?.adults || 1;
+  const children = searchData?.children || 0;
+  const infants = searchData?.infants || 0;
+  const totalTravelers = adults + children + infants;
   const [selectedFlight, setSelectedFlight] = useState(null);
+  const [flights, setFlights] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const filteredFlights = [...flights]
+    .filter((flight) => {
+      if (airlineFilter && flight.airline !== airlineFilter) {
+        return false;
+      }
 
-  const totalTravelers =
-    travelers.adults + travelers.children + travelers.infants;
-  const selectedFlightData = useMemo(() => {
-    if (!flights.length) return null;
+      if (stopFilter === "nonstop" && flight.stops !== 0) {
+        return false;
+      }
 
-    return (
-      flights.find((flight) => flight.result_index === selectedFlight) ||
-      flights[0]
-    );
-  }, [flights, selectedFlight]);
+      if (stopFilter === "1stop" && flight.stops !== 1) {
+        return false;
+      }
 
-  const swapAirports = () => {
-    setFromAirport(toAirport);
-    setToAirport(fromAirport);
-  };
+      return true;
+    })
+    .sort((a, b) => {
+      if (sortBy === "priceLow") {
+        return a.price - b.price;
+      }
 
-  const setRoute = (fromCode, toCode) => {
-    const nextFrom = airports.find((airport) => airport.code === fromCode);
-    const nextTo =
-      airports.find((airport) => airport.code === toCode) ??
-      airports.find((airport) => airport.code === "BOM");
+      if (sortBy === "priceHigh") {
+        return b.price - a.price;
+      }
 
-    if (nextFrom) {
-      setFromAirport(nextFrom);
+      if (sortBy === "duration") {
+        return a.duration - b.duration;
+      }
+
+      return 0;
+    });
+
+  const airlines = [...new Set(flights.map((flight) => flight.airline))];
+  useEffect(() => {
+    if (!searchData.origin) {
+      return;
     }
 
-    if (nextTo) {
-      setToAirport(nextTo);
-    }
-  };
-  const searchFlights = async () => {
+    fetchFlights();
+  }, []);
+
+  const fetchFlights = async () => {
     try {
-      setLoading(true);
-
-      const payload = {
-        origin: fromAirport.code,
-        destination: toAirport.code,
-
-        departure_date: departureDate,
-
-        adults: travelers.adults,
-        children: travelers.children,
-        infants: travelers.infants,
-      };
-
-      const response = await api.post("/flight/search", payload);
+      const response = await api.post("/flight/search", {
+        origin: searchData.origin,
+        destination: searchData.destination,
+        departure_date: searchData.departureDate,
+        adults: searchData.adults,
+        children: searchData.children,
+        infants: searchData.infants,
+      });
 
       setFlights(response.data);
     } catch (error) {
       console.error(error);
-
-      alert(error.response?.data?.message || "Flight search failed");
     } finally {
       setLoading(false);
     }
   };
-
   return (
     <main className="airkit-page">
       <section
-        className="airkit-hero"
+        className="airkit-hero1"
         style={{
           backgroundImage: `linear-gradient(115deg, rgba(7, 21, 45, 0.86), rgba(8, 79, 111, 0.54)), url(${heroBg})`,
         }}
       >
         <div className="container">
-          <div className="row align-items-end g-4">
-            <div className="col-lg-7">
+          <div className="row align-items-end top-search">
+            <div className="col-lg-7 m-auto">
               <nav aria-label="breadcrumb" className="mb-3">
                 <ol className="breadcrumb airkit-breadcrumb mb-0">
                   <li className="breadcrumb-item">
@@ -489,15 +528,6 @@ export default function AirSearchUI() {
                   </li>
                 </ol>
               </nav>
-              <span className="badge bg-warning text-gray-9 mb-3">
-                B2B flight booking
-              </span>
-              <h1>Search smarter fares across every route.</h1>
-              <p>
-                Compare live-style flight options, cabin choices, baggage, and
-                trip rules in a polished workspace built from the current UI
-                kit.
-              </p>
             </div>
             <div className="col-lg-5">
               <div className="airkit-hero-card">
@@ -505,196 +535,73 @@ export default function AirSearchUI() {
                 <div>
                   <span>Today's top route</span>
                   <strong>
-                    {fromAirport.city} to {toAirport.city}
+                    {origin} to {destination}
                   </strong>
-                  <small>
-                    {selectedFlightData
-                      ? `₹${selectedFlightData.price} onwards`
-                      : "Search flights"}
-                  </small>
+                  <small>Live flight search results</small>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </section>
+      <div className="row mb-4">
+        <div className="col-md-4">
+          <select
+            className="form-select"
+            value={airlineFilter}
+            onChange={(e) => setAirlineFilter(e.target.value)}
+          >
+            <option value="">All Airlines</option>
 
-      <section className="airkit-search-wrap">
-        <div className="container">
-          <div className="card airkit-search-card">
-            <div className="card-body">
-              <div className="banner-form">
-                <ul className="nav mb-3" aria-label="Travel services">
-                  {services.map((item) => (
-                    <li key={item.title}>
-                      <button
-                        type="button"
-                        className={`nav-link ${item.active ? "active" : ""}`}
-                      >
-                        <i
-                          className={`isax ${item.icon} me-2`}
-                          aria-hidden="true"
-                        ></i>
-                        {item.title}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-
-                <form
-                  className="airkit-form"
-                  onSubmit={(event) => event.preventDefault()}
-                >
-                  <div className="airkit-trip-tabs">
-                    {["One Way", "Round Trip", "Multi City"].map((type) => (
-                      <label
-                        key={type}
-                        className={tripType === type ? "active" : ""}
-                      >
-                        <input
-                          type="radio"
-                          name="tripType"
-                          checked={tripType === type}
-                          onChange={() => setTripType(type)}
-                        />
-                        {type}
-                      </label>
-                    ))}
-                  </div>
-
-                  <div className="d-lg-flex align-items-stretch">
-                    <div className="d-flex form-info">
-                      <AirportDropdown
-                        id="from"
-                        label="From"
-                        airport={fromAirport}
-                        onSelect={setFromAirport}
-                      />
-
-                      <div className="airkit-swap-holder">
-                        <button
-                          type="button"
-                          className="airkit-swap-btn"
-                          onClick={swapAirports}
-                          aria-label="Swap departure and destination"
-                        >
-                          <i
-                            className="isax isax-arrow-swap-horizontal"
-                            aria-hidden="true"
-                          ></i>
-                        </button>
-                      </div>
-
-                      <AirportDropdown
-                        id="to"
-                        label="To"
-                        airport={toAirport}
-                        onSelect={setToAirport}
-                      />
-
-                      <div className="form-item">
-                        <label className="form-label fs-14 text-default mb-1">
-                          Departure
-                        </label>
-                        <input
-                          type="date"
-                          className="form-control"
-                          value={departureDate}
-                          onChange={(event) =>
-                            setDepartureDate(event.target.value)
-                          }
-                        />
-                        <p className="fs-12 mb-0">Flexible fares enabled</p>
-                      </div>
-
-                      {tripType === "Round Trip" && (
-                        <div className="form-item">
-                          <label className="form-label fs-14 text-default mb-1">
-                            Return
-                          </label>
-                          <input
-                            type="date"
-                            className="form-control"
-                            value={returnDate}
-                            onChange={(event) =>
-                              setReturnDate(event.target.value)
-                            }
-                          />
-                          <p className="fs-12 mb-0">Best return matrix</p>
-                        </div>
-                      )}
-
-                      <TravelersDropdown
-                        travelers={travelers}
-                        onChange={setTravelers}
-                        cabin={cabin}
-                        onCabinChange={setCabin}
-                      />
-                      <button
-                        type="button"
-                        className="btn btn-primary rounded"
-                        onClick={searchFlights}
-                        disabled={loading}
-                      >
-                        <i
-                          className="isax isax-search-normal me-2"
-                          aria-hidden="true"
-                        ></i>
-                        {loading ? "Searching..." : "Search"}
-                      </button>
-                    </div>
-                  </div>
-                </form>
-
-                <div className="airkit-fare-row">
-                  <span>Fare type</span>
-                  {fareTypes.map((fare) => (
-                    <button
-                      type="button"
-                      key={fare}
-                      className={activeFare === fare ? "active" : ""}
-                      onClick={() => setActiveFare(fare)}
-                    >
-                      {fare}
-                    </button>
-                  ))}
-                </div>
-
-                <div className="airkit-route-chips">
-                  <span>Popular</span>
-                  {routeChips.map(([from, to]) => (
-                    <button
-                      type="button"
-                      key={`${from}-${to}`}
-                      onClick={() => setRoute(from, to)}
-                    >
-                      {from} to {to}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
+            {airlines.map((airline) => (
+              <option key={airline} value={airline}>
+                {airline}
+              </option>
+            ))}
+          </select>
         </div>
-      </section>
 
-      <CategoryCards />
+        <div className="col-md-4">
+          <select
+            className="form-select"
+            value={stopFilter}
+            onChange={(e) => setStopFilter(e.target.value)}
+          >
+            <option value="all">All Stops</option>
 
+            <option value="nonstop">Non Stop</option>
+
+            <option value="1stop">1 Stop</option>
+          </select>
+        </div>
+
+        <div className="col-md-4">
+          <select
+            className="form-select"
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+          >
+            <option value="">Sort By</option>
+
+            <option value="priceLow">Price Low → High</option>
+
+            <option value="priceHigh">Price High → Low</option>
+
+            <option value="duration">Duration</option>
+          </select>
+        </div>
+      </div>
       <section className="content airkit-results-section">
         <div className="container">
           <div className="row">
-            <aside className="col-xl-3 col-lg-4">
-              <FilterPanel />
-            </aside>
-
-            <div className="col-xl-9 col-lg-8">
+            <div className="col-xl-12 col-lg-12">
               <div className="airkit-results-heading">
                 <div>
                   <span className="badge bg-primary mb-2">
                     Recommended flights
                   </span>
                   <h2>
-                    {fromAirport.code} to {toAirport.code}, {totalTravelers}{" "}
+                    {origin} to {destination}, {adults + children + infants}{" "}
                     traveller
                     {totalTravelers > 1 ? "s" : ""}
                   </h2>
@@ -735,12 +642,28 @@ export default function AirSearchUI() {
                   </ul>
                 </div>
               </div>
-
+              <h5 className="mb-3">{filteredFlights.length} Flights Found</h5>
               <div className="airkit-flight-list">
-                {flights.length > 0 ? (
-                  flights.map((flight, index) => (
+                {loading ? (
+                  <>
+                    {[1, 2, 3, 4, 5].map((item) => (
+                      <div key={item} className="card p-4 mb-3 shadow-sm">
+                        <div className="placeholder-glow">
+                          <span className="placeholder col-4"></span>
+
+                          <span className="placeholder col-12 mt-3"></span>
+
+                          <span className="placeholder col-8 mt-2"></span>
+
+                          <span className="placeholder col-3 mt-3"></span>
+                        </div>
+                      </div>
+                    ))}
+                  </>
+                ) : flights.length > 0 ? (
+                  filteredFlights.map((flight, index) => (
                     <FlightCard
-                      key={index}
+                      key={flight.result_index || index}
                       flight={flight}
                       selected={selectedFlight === flight.result_index}
                       onSelect={setSelectedFlight}
@@ -756,51 +679,6 @@ export default function AirSearchUI() {
           </div>
         </div>
       </section>
-      {/* <!-- Pagination --> */}
-      <nav className="pagination-nav">
-        <ul className="pagination justify-content-center">
-          <li className="page-item disabled">
-            <a className="page-link" href="#" aria-label="Previous">
-              <span aria-hidden="true">
-                <i className="fa-solid fa-chevron-left"></i>
-              </span>
-            </a>
-          </li>
-          <li className="page-item">
-            <a className="page-link" href="#">
-              1
-            </a>
-          </li>
-          <li className="page-item">
-            <a className="page-link" href="#">
-              2
-            </a>
-          </li>
-          <li className="page-item">
-            <a className="page-link" href="#">
-              3
-            </a>
-          </li>
-          <li className="page-item active">
-            <a className="page-link" href="#">
-              4
-            </a>
-          </li>
-          <li className="page-item">
-            <a className="page-link" href="#">
-              5
-            </a>
-          </li>
-          <li className="page-item">
-            <a className="page-link" href="#" aria-label="Next">
-              <span aria-hidden="true">
-                <i className="fa-solid fa-chevron-right"></i>
-              </span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-      {/* <!-- /Pagination --> */}
     </main>
   );
 }
