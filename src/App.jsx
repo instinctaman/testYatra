@@ -12,7 +12,8 @@ import FlightSearch from "./pages/FlightSearch";
 import FlightResults from "./pages/FlightResults";
 import FlightSearchBar from "./NewFiles/FlightSearchBar";
 import NewFlightResults from "./NewFiles/NewFlightResults";
-import FlightFareModal from "./NewFiles/FlightFareModal";
+import FlightFareModal from "./NewFiles/FLightFareMode/FlightFareModel";
+import TripDetails from "./NewFiles/TripDetails";
 
 // Layout Component with Conditional Navbar
 function AppContent() {
@@ -66,7 +67,8 @@ function App() {
   return (
     <BrowserRouter>
       {/* <AppContent /> */}
-      <FlightFareModal />
+      {/* <FlightFareModal /> */}
+      <TripDetails />
     </BrowserRouter>
   );
 }
