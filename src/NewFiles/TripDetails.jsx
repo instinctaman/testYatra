@@ -80,23 +80,7 @@ const TripDetails = () => {
 
   return (
     <div className="main-container">
-      {/* Header */}
-      {/* <div className="header">
-        <div className="logo">
-          <div className="logo-icon">Y</div>
-          <h1>Yatra</h1>
-        </div>
-        
-        <div className="header-right">
-          <button className="refresh-btn" onClick={handleRefresh} disabled={refreshing}>
-            {refreshing ? "Refreshing..." : "🔄 Refresh Data"}
-          </button>
-          <div className="user-info">
-            <i className="fas fa-user"></i>
-            <span>Hi, Traveler</span>
-          </div>
-        </div>
-      </div> */}
+      
 
       <div className="content-grid">
         {/* Left Panel - Trip Details */}
