@@ -1,0 +1,372 @@
+:root {
+    --mmt-blue: #2563eb;
+    --mmt-orange: #f97316;
+    --mmt-dark: #1a1a2e;
+    --mmt-gray: #64748b;
+    --radius: 5px;
+    --shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+.search-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    /* background: linear-gradient(135deg, #ff4b2b, #ff4b2b); */
+    padding: 24px 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--shadow);
+}
+
+.search-header.scrolled {
+    padding: 12px 0;
+    background: white;
+    box-shadow: var(--shadow-lg);
+}
+
+.header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.full-search-bar {
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: var(--radius);
+    padding: 6px;
+    gap: 8px;
+    box-shadow: var(--shadow-lg);
+    flex-wrap: wrap;
+}
+
+.search-field {
+    flex: 1;
+    padding: 12px 16px;
+    min-width: 160px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.field-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--mmt-gray);
+    letter-spacing: 0.5px;
+}
+
+.field-city {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--mmt-dark);
+}
+
+.field-airport {
+    font-size: 11px;
+    color: var(--mmt-gray);
+}
+
+.swap-btn {
+
+    color: var(--main-color1);
+    background-color: transparent;
+    border: 1.5px solid var(--main-color1);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.swap-btn:hover {
+    rotate: 180deg;
+}
+
+.search-divider {
+    width: 1px;
+    height: 48px;
+    background: #e2e8f0;
+}
+
+.search-btn {
+    background: linear-gradient(135deg, #f97316, #ef4444);
+    color: white;
+    border: none;
+    padding: 14px 32px;
+    border-radius: 40px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.compact-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    padding: 12px 20px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+}
+
+.compact-route {
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.modify-btn {
+    background: transparent;
+    border: 2px solid var(--mmt-blue);
+    color: var(--mmt-blue);
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.page-body {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 20px;
+    display: flex;
+    gap: 24px;
+}
+
+.main-content {
+    flex: 1;
+}
+
+.filters-panel {
+    width: 280px;
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    height: fit-content;
+    position: sticky;
+    top: 90px;
+    overflow: hidden;
+}
+
+.filter-header {
+    padding: 16px;
+    background: var(--mmt-dark);
+    color: white;
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.filter-section {
+    padding: 16px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.filter-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--mmt-gray);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.filter-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 0;
+    cursor: pointer;
+}
+
+.checkbox-custom {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #cbd5e1;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+.filter-option input:checked+.checkbox-custom {
+    background: var(--mmt-blue);
+    border-color: var(--mmt-blue);
+}
+
+.filter-option input:checked+.checkbox-custom::after {
+    content: "✓";
+    color: white;
+    font-size: 12px;
+    position: absolute;
+    margin-left: 3px;
+}
+
+.price-display {
+    display: flex;
+    justify-content: space-between;
+    margin: 8px 0;
+    font-weight: 600;
+}
+
+.price-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.result-summary {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.sort-bar {
+    display: flex;
+    background: white;
+    border-radius: 5px;
+    padding: 6px;
+    margin-bottom: 16px;
+    gap: 6px;
+}
+
+.sort-btn {
+    padding: 8px 16px;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.sort-btn.active {
+    border-radius: 40px;
+    background: var(--main-color1);
+    color: white;
+}
+
+.flight-card {
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 10px;
+    padding: 16px 20px;
+    transition: all 0.2s linear;
+}
+.flight-card:hover{
+    scale: 1.01;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+}
+
+.card-main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.airline-logo-box {
+    width: 42px;
+    height: 42px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.airline-col {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.flight-price {
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.fair-btn {
+    padding: 10px 20px;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    margin: 8px 0;
+}
+
+.details-toggle {
+    background: none;
+    border: none;
+    color: var(--mmt-blue);
+    cursor: pointer;
+    font-size: 13px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .full-search-bar {
+        flex-direction: column;
+    }
+
+    .search-divider {
+        display: none;
+    }
+
+    .page-body {
+        flex-direction: column;
+    }
+
+    .filters-panel {
+        width: 100%;
+        position: static;
+    }
+}
+
+.bar-wrapper {
+    position: relative;
+    min-height: 90px;
+}
+
+.full-bar-container,
+.compact-bar-container {
+    transition: all 0.35s ease;
+}
+
+.compact-bar-container {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+}
+
+.show-full .full-bar-container {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.show-full .compact-bar-container {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+}
+
+.show-compact .full-bar-container {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+    height: 0;
+    overflow: hidden;
+}
+
+.show-compact .compact-bar-container {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}

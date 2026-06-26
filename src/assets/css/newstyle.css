@@ -1,0 +1,53 @@
+/* Add this to your global styles */
+
+.search-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: linear-gradient(135deg, #ff4b2b, #ff4b2b);
+  padding: 24px 0;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+}
+
+.search-header.scrolled {
+  padding: 12px 0;
+  background: white;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+}
+
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.page-body {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 20px;
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.main-content {
+  flex: 1;
+}
+
+/* Fix layout shift */
+.full-search-bar, .compact-bar {
+  transition: all 0.3s ease;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .page-body {
+    flex-direction: column;
+    padding: 16px;
+  }
+  .filters-panel {
+    width: 100%;
+    position: static;
+  }
+}
