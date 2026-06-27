@@ -1,0 +1,175 @@
+.passenger-card {
+  padding: 22px;
+}
+
+.passenger-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
+.passenger-header h2 {
+  font-size: 20px;
+  color: #1b1f28;
+}
+
+.passenger-header span {
+  color: #7c8696;
+  font-size: 14px;
+}
+
+.passenger-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.passenger-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 16px 18px;
+
+  border: 1px solid #dfe5ec;
+  border-radius: 14px;
+
+  cursor: pointer;
+
+  transition: .25s;
+}
+
+.passenger-item:hover {
+  border-color: #1565c0;
+  transform: translateY(-2px);
+}
+
+.active-passenger {
+  border-color: #1565c0;
+  background: #edf6ff;
+}
+
+.passenger-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.passenger-avatar {
+  width: 50px;
+  height: 50px;
+
+  border-radius: 50%;
+
+  background: #1565c0;
+  color: white;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 18px;
+}
+
+.passenger-details h3 {
+  margin: 0;
+  font-size: 17px;
+  color: #1b1f28;
+}
+
+.passenger-details span {
+  color: #7c8696;
+  font-size: 14px;
+}
+
+.passenger-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.seat-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  background: #1565c0;
+  color: white;
+
+  padding: 8px 14px;
+
+  border-radius: 25px;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.remove-seat-btn {
+  width: 36px;
+  height: 36px;
+
+  border: none;
+
+  border-radius: 50%;
+
+  background: #ffeaea;
+
+  color: #d32f2f;
+
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: .25s;
+}
+
+.remove-seat-btn:hover {
+  background: #ffd5d5;
+}
+
+.seat-not-selected {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  color: #7c8696;
+
+  font-size: 14px;
+}
+
+.seat-not-selected svg {
+  color: #2e7d32;
+}
+
+@media (max-width: 768px) {
+
+  .passenger-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .passenger-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .passenger-card {
+    padding: 16px;
+  }
+
+  .passenger-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+}

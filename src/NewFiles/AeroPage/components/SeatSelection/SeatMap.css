@@ -1,0 +1,293 @@
+/* ===========================
+   SeatMap.css
+=========================== */
+
+.seat-map {
+  padding: 18px;
+}
+
+.seat-map-header {
+  margin-bottom: 16px;
+}
+
+.seat-map-header h2 {
+  margin: 0;
+  font-size: 22px;
+  color: #1b1f28;
+}
+
+.seat-map-header span {
+  display: block;
+  margin-top: 8px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* ===========================
+   Scroll Wrapper
+=========================== */
+
+.seat-map-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 12px;
+}
+
+/* ===========================
+   Aircraft
+=========================== */
+
+.aircraft {
+  width: fit-content;
+  min-width: 610px;
+
+  margin: auto;
+
+  background: #ffffff;
+
+  border: 2px solid #dbe3ec;
+  border-radius: 180px 180px 60px 60px;
+
+  padding: 28px 24px 34px;
+}
+
+/* ===========================
+   Nose
+=========================== */
+
+.aircraft-nose {
+  width: 180px;
+  height: 72px;
+
+  margin: 0 auto 22px;
+
+  border: 2px solid #dbe3ec;
+  border-bottom: none;
+
+  border-radius: 120px 120px 0 0;
+
+  position: relative;
+}
+
+.cockpit-window {
+  position: absolute;
+  top: 22px;
+
+  width: 28px;
+  height: 18px;
+
+  background: #1565c0;
+  border-radius: 12px;
+}
+
+.cockpit-window.left {
+  left: 52px;
+}
+
+.cockpit-window.right {
+  right: 52px;
+}
+
+/* ===========================
+   Column Header
+=========================== */
+
+.seat-header {
+  display: grid;
+
+  grid-template-columns:
+    55px
+    repeat(3, 42px)
+    64px
+    repeat(3, 42px);
+
+  justify-content: center;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-bottom: 14px;
+}
+
+.row-number-placeholder {
+  width: 55px;
+}
+
+.seat-column {
+  text-align: center;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  color: #4b5563;
+}
+
+.aisle-header {
+  text-align: center;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  letter-spacing: 2px;
+
+  color: #9aa3b2;
+}
+
+/* ===========================
+   Rows
+=========================== */
+
+.seat-row {
+  display: grid;
+
+  grid-template-columns:
+    55px
+    repeat(3, 42px)
+    64px
+    repeat(3, 42px);
+
+  gap: 8px;
+
+  justify-content: center;
+  align-items: center;
+
+  margin-bottom: 10px;
+}
+
+.row-number {
+  text-align: center;
+
+  font-weight: 700;
+
+  color: #546170;
+}
+
+.aisle-space {
+  height: 42px;
+}
+
+/* ===========================
+   Exit Row
+=========================== */
+
+.exit-row-banner {
+  margin: 18px auto;
+
+  width: 430px;
+  max-width: 100%;
+
+  padding: 10px;
+
+  text-align: center;
+
+  background: #ffebee;
+
+  border: 1px solid #ef9a9a;
+
+  color: #d32f2f;
+
+  font-weight: 700;
+
+  border-radius: 10px;
+
+  letter-spacing: 2px;
+}
+
+/* ===========================
+   Wing
+=========================== */
+
+.wing-banner {
+  margin: 20px auto;
+
+  width: 450px;
+  max-width: 100%;
+
+  padding: 10px;
+
+  text-align: center;
+
+  background: #eef5ff;
+
+  border: 1px solid #c7daf8;
+
+  color: #1565c0;
+
+  font-weight: 700;
+
+  border-radius: 10px;
+}
+
+/* ===========================
+   Tail
+=========================== */
+
+.aircraft-tail {
+  width: 120px;
+  height: 70px;
+
+  margin: 28px auto 0;
+
+  border: 2px solid #dbe3ec;
+  border-top: none;
+
+  border-radius: 0 0 80px 80px;
+}
+
+/* ===========================
+   Scrollbar
+=========================== */
+
+.seat-map-wrapper::-webkit-scrollbar {
+  height: 10px;
+}
+
+.seat-map-wrapper::-webkit-scrollbar-thumb {
+  background: #cfd8e3;
+  border-radius: 10px;
+}
+
+.seat-map-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media (max-width: 992px) {
+
+  .seat-map {
+    padding: 20px;
+  }
+
+  .aircraft {
+    min-width: 610px;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .seat-map-header h2 {
+    font-size: 20px;
+  }
+
+  .aircraft {
+    min-width: 590px;
+    padding: 26px 18px 34px;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .seat-map {
+    padding: 16px;
+  }
+
+  .aircraft {
+    min-width: 560px;
+  }
+
+}

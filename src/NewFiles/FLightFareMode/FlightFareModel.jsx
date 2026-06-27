@@ -12,7 +12,7 @@ import {
   ShieldIcon,
 } from "./Icons";
 
-const FlightFareModal = () => {
+const FlightFareModal = ({ onClose = () => {} }) => {
 
   const [selected, setSelected] = useState("yatrab2b");
 
@@ -65,7 +65,7 @@ const FlightFareModal = () => {
 
           <button
             className="ffm-close-btn"
-            onClick={() => setOpen(false)}
+            onClick={onClose}
           >
             ×
           </button>

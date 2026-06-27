@@ -567,6 +567,7 @@
 }
 
 .fsb-search-btn {
+  text-decoration: none;
   padding: 14px 60px;
   background: #c0392b;
   color: #fff;
@@ -703,4 +704,57 @@
   .fsb-search-btn {
     max-width: 100%;
   }
+}
+
+/* Home theme alignment and steadier search hover */
+.fsb-nav-tab:hover,
+.fsb-radio-label:hover,
+.fsb-fare-btn:hover,
+.fsb-popular-btn:hover {
+  color: #087dd1;
+  border-color: #087dd1;
+}
+
+.fsb-nav-tab.fsb-nav-active,
+.fsb-radio-dot,
+.fsb-counter-btn:hover,
+.fsb-apply-btn,
+.fsb-calendar-day.fsb-selected {
+  background: #087dd1;
+}
+
+.fsb-radio-label.fsb-radio-active,
+.fsb-fare-active {
+  border-color: #087dd1 !important;
+  color: #087dd1 !important;
+  background: #f2f9fe !important;
+}
+
+.fsb-swap-btn,
+.fsb-counter-btn {
+  border-color: #087dd1;
+  color: #087dd1;
+}
+
+.fsb-swap-btn:hover,
+.fsb-apply-btn:hover {
+  background: #055fa5;
+}
+
+.fsb-search-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 190px;
+  padding: 13px 34px;
+  background: #087dd1;
+  box-shadow: 0 5px 14px rgba(8, 125, 209, .22);
+}
+
+.fsb-search-btn:hover {
+  background: #055fa5;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(8, 125, 209, .28);
 }

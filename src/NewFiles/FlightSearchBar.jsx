@@ -36,6 +36,13 @@ const NAV_TABS = [
   { id: "cruises", label: "Cruises", icon: "🚢" },
 ];
 
+const TAB_ICONS = {
+  flights: "bi-airplane",
+  hotels: "bi-building",
+  packages: "bi-map",
+  cruises: "bi-water",
+};
+
 // Calendar Component
 function Calendar({ selectedDate, onDateSelect, minDate }) {
   const [currentMonth, setCurrentMonth] = useState(new Date(selectedDate || Date.now()));
@@ -81,9 +88,13 @@ function Calendar({ selectedDate, onDateSelect, minDate }) {
   return (
     <div className="fsb-calendar">
       <div className="fsb-calendar-header">
-        <button onClick={prevMonth}>←</button>
+        <button onClick={prevMonth} aria-label="Previous month">
+          <i className="bi bi-chevron-left" />
+        </button>
         <span>{currentMonth.toLocaleString('default', { month: 'long' })} {year}</span>
-        <button onClick={nextMonth}>→</button>
+        <button onClick={nextMonth} aria-label="Next month">
+          <i className="bi bi-chevron-right" />
+        </button>
       </div>
 
       <div className="fsb-calendar-weekdays">
@@ -231,7 +242,7 @@ export default function FlightSearchBar() {
             className={`fsb-nav-tab ${activeNav === tab.id ? "fsb-nav-active" : ""}`}
             onClick={() => setActiveNav(tab.id)}
           >
-            <span className="fsb-nav-icon">{tab.icon}</span>
+            <i className={`bi ${TAB_ICONS[tab.id]} fsb-nav-icon`} aria-hidden="true" />
             {tab.label}
           </button>
         ))}
@@ -290,7 +301,9 @@ export default function FlightSearchBar() {
           )}
         </div>
 
-        <button className="fsb-swap-btn" onClick={swapCities}>⇄</button>
+        <button className="fsb-swap-btn" onClick={swapCities} aria-label="Swap cities">
+          <i className="bi bi-arrow-left-right" />
+        </button>
 
         {/* TO */}
         <div ref={toRef} className="fsb-field-cell">
@@ -394,7 +407,7 @@ export default function FlightSearchBar() {
                       <div className="fsb-tr-sub">{sub}</div>
                     </div>
                     <div className="fsb-counter">
-                      <button className="fsb-counter-btn" onClick={() => updateTraveller(key, -1)}>−</button>
+                      <button className="fsb-counter-btn" onClick={() => updateTraveller(key, -1)} aria-label={`Decrease ${label}`}>-</button>
                       <span className="fsb-counter-val">{travellers[key]}</span>
                       <button className="fsb-counter-btn" onClick={() => updateTraveller(key, 1)}>+</button>
                     </div>
@@ -445,8 +458,8 @@ export default function FlightSearchBar() {
         ))}
 
         <div className="fbs-searching-btn">
-          <Link to="/search-page" className="fsb-search-btn" onClick={handleSearch}>
-            <span className="fsb-search-icon">🔍</span>
+          <Link to="/flights" className="fsb-search-btn" onClick={handleSearch}>
+            <i className="bi bi-search fsb-search-icon" aria-hidden="true" />
             Search Flights
           </Link>
         </div>

@@ -1,7 +1,6 @@
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import api from "../services/api";
 import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
 
 import heroBg from "../assets/ui/assets/img/bg/breadcrumb-04.jpg";
 // import brandLogo from "../assets/ui/assets/img/logo-dark.svg";
@@ -478,15 +477,7 @@ export default function AirSearchUI() {
     });
 
   const airlines = [...new Set(flights.map((flight) => flight.airline))];
-  useEffect(() => {
-    if (!searchData.origin) {
-      return;
-    }
-
-    fetchFlights();
-  }, []);
-
-  const fetchFlights = async () => {
+  const fetchFlights = useCallback(async () => {
     try {
       const response = await api.post("/flight/search", {
         origin: searchData.origin,
@@ -503,7 +494,22 @@ export default function AirSearchUI() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [
+    searchData.adults,
+    searchData.children,
+    searchData.departureDate,
+    searchData.destination,
+    searchData.infants,
+    searchData.origin,
+  ]);
+
+  useEffect(() => {
+    if (!searchData.origin) {
+      return;
+    }
+
+    fetchFlights();
+  }, [fetchFlights, searchData.origin]);
   return (
     <main className="airkit-page">
       <section
