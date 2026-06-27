@@ -55,7 +55,7 @@
 
   color: white;
 
-  font-size: 16px;
+  font-size: 12px;
 
   font-weight: 600;
 
@@ -126,7 +126,7 @@
 .ffm-header-small {
   color: #bfdbfe;
 
-  font-size: 12px;
+  font-size: 6px;
 
   font-weight: 600;
 
@@ -138,7 +138,7 @@
 .ffm-title {
   color: white;
 
-  font-size: 22px;
+  font-size: 11px;
 
   font-weight: 700;
 }
@@ -165,7 +165,7 @@
 .ffm-route .plane {
   color: #dbeafe;
 
-  font-size: 18px;
+  font-size: 9px;
 }
 
 .ffm-close-btn {
@@ -180,7 +180,7 @@
 
   color: white;
 
-  font-size: 22px;
+  font-size: 11px;
 
   cursor: pointer;
 
@@ -239,19 +239,48 @@
 
   color: var(--success);
 
-  font-size: 12px;
+  font-size: 6px;
 
   font-weight: 600;
 }
 
 .fare-grid {
   display: grid;
-
-  grid-template-columns: repeat(3,1fr);
-
+  grid-template-columns: repeat(3, 1fr);
   gap: 18px;
 
   padding: 24px;
+
+  /* Scroll */
+  max-height: 60vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  /* Smooth scrolling */
+  scroll-behavior: smooth;
+
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: #9ca3af #f3f4f6;
+}
+
+/* Chrome, Edge, Safari */
+.fare-grid::-webkit-scrollbar {
+  width: 8px;
+}
+
+.fare-grid::-webkit-scrollbar-track {
+  background: #f3f4f6;
+  border-radius: 10px;
+}
+
+.fare-grid::-webkit-scrollbar-thumb {
+  background: #9ca3af;
+  border-radius: 10px;
+}
+
+.fare-grid::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
 }
 
 @keyframes fadeSlideUp {
@@ -363,7 +392,7 @@
 
   color: white;
 
-  font-size: 11px;
+  font-size: 6px;
 
   font-weight: 700;
 
@@ -383,7 +412,7 @@
 
   color: #94a3b8;
 
-  font-size: 11px;
+  font-size: 6px;
 
   font-weight: 700;
 
@@ -399,7 +428,7 @@
 }
 
 .price {
-  font-size: 28px;
+  font-size: 14px;
 
   font-weight: 800;
 
@@ -409,7 +438,7 @@
 .per-adult {
   color: #94a3b8;
 
-  font-size: 12px;
+  font-size: 6px;
 }
 
 .original-price {

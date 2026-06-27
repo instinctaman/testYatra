@@ -14,6 +14,7 @@ import FlightSearchBar from "./NewFiles/FlightSearchBar";
 import NewFlightResults from "./NewFiles/NewFlightResults";
 import FlightFareModal from "./NewFiles/FLightFareMode/FlightFareModel";
 import TripDetails from "./NewFiles/TripDetails";
+import TravellerForm from "./NewFiles/TravellerForm/TravellerForm";
 
 // Layout Component with Conditional Navbar
 function AppContent() {
@@ -47,7 +48,7 @@ function AppContent() {
         <Route path="/flight-results" element={<FlightResults />} />
 
         <Route path="/search-page" element={<NewFlightResults />} />
-        <Route path="/search-results" element={<NewFlightResults />} />
+        {/* <Route path="/search-results" element={<NewFlightResults />} /> */}
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
@@ -67,8 +68,9 @@ function App() {
   return (
     <BrowserRouter>
       {/* <AppContent /> */}
-      {/* <FlightFareModal /> */}
-      <TripDetails />
+      <FlightFareModal />
+      {/* <TripDetails /> */}
+      {/* <TravellerForm /> */}
     </BrowserRouter>
   );
 }

@@ -184,7 +184,7 @@ function FlightCard({ flight }) {
         <div className="price-col">
           {flight.oldPrice && <div className="old-price">₹{flight.oldPrice}</div>}
           <div className="flight-price">₹{flight.price}</div>
-          <button className="fair-btn" style={{ background: accentColor }}>View Fair</button>
+          <button className="book-btn" style={{ background: accentColor }}>Book Now</button>
           <button className="details-toggle" onClick={() => setExpanded(!expanded)}>
             {expanded ? "Hide Details ▲" : "Flight Details ▼"}
           </button>
