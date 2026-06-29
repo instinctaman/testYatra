@@ -26,6 +26,7 @@ import CategoryCards from "../cards/CategoryCards";
 import vistara from "../assets/images/vistara.jfif";
 import indigo from "../assets/images/indigo.jfif";
 import airIndia from "../assets/images/airIndia.jfif";
+import FlightSearchBar from "../NewFiles/FlightSearchBar";
 
 const airports = [
   {
@@ -470,7 +471,7 @@ export default function Landing() {
                 B2B Home
               </span>
             </div>
-            <div className="card airkit-search-card">
+            {/* <div className="card airkit-search-card">
               <div className="card-body">
                 <div className="banner-form">
                   <ul
@@ -629,7 +630,8 @@ export default function Landing() {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
+            <FlightSearchBar />
           </div>
         </section>
         <div className="airkit-hero">

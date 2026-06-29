@@ -1,0 +1,103 @@
+.legend {
+  padding: 10px 12px;
+  border: 0;
+  border-top: 1px solid #d8dfe8;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.legend-header {
+  display: none;
+}
+
+.legend-header h2 {
+  margin: 0;
+  font-size: 20px;
+  color: #1b1f28;
+}
+
+.legend-grid {
+  display: grid;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-seat {
+  width: 14px;
+  height: 14px;
+
+  border-radius: 3px;
+  border: 1px solid #d5dce5;
+
+  flex-shrink: 0;
+}
+
+/* Available */
+
+.legend-seat.available {
+  background: #ffffff;
+}
+
+/* Selected */
+
+.legend-seat.selected {
+  background: #ff4b2b;
+  border-color: #ff4b2b;
+}
+
+/* Occupied */
+
+.legend-seat.occupied {
+  background: #c8ced8;
+  border-color: #c8ced8;
+}
+
+/* Premium */
+
+.legend-seat.premium {
+  background: #ffb300;
+  border-color: #ffb300;
+}
+
+/* Exit */
+
+.legend-seat.exit {
+  background: #ef5350;
+  border-color: #ef5350;
+}
+
+/* Extra Legroom */
+
+.legend-seat.extra-legroom {
+  background: #8e24aa;
+  border-color: #8e24aa;
+}
+
+.legend-item span {
+  font-size: 11px;
+  color: #4b5563;
+}
+
+@media (max-width:900px){
+
+.legend-grid{
+grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+@media (max-width:600px){
+
+.legend-grid{
+grid-template-columns:1fr;
+}
+
+}

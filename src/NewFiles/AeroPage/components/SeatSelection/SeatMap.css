@@ -1,0 +1,315 @@
+/* ===========================
+   SeatMap.css
+=========================== */
+
+.seat-map {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.seat-map-header {
+  display: none;
+}
+
+.seat-map-header h2 {
+  margin: 0;
+  font-size: 22px;
+  color: #1b1f28;
+}
+
+.seat-map-header span {
+  display: block;
+  margin-top: 8px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* ===========================
+   Scroll Wrapper
+=========================== */
+
+.seat-map-wrapper {
+  overflow-x: auto;
+  overflow-y: auto;
+  height: 510px;
+  padding: 14px 16px 0;
+}
+
+/* ===========================
+   Aircraft
+=========================== */
+
+.aircraft {
+  width: 410px;
+  min-width: 410px;
+
+  margin: auto;
+
+  background: rgba(255, 255, 255, 0.88);
+
+  border: 0;
+  border-radius: 220px 220px 28px 28px;
+
+  padding: 84px 24px 26px;
+  position: relative;
+}
+
+.aircraft::before {
+  content: "";
+  position: absolute;
+  inset: 10px 38px auto;
+  height: 150px;
+  border-radius: 50% 50% 16px 16px;
+  background: #fff;
+  opacity: 0.85;
+  z-index: 0;
+}
+
+.aircraft > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ===========================
+   Nose
+=========================== */
+
+.aircraft-nose {
+  width: 110px;
+  height: 54px;
+
+  margin: 0 auto 22px;
+
+  border: 0;
+  border-bottom: none;
+
+  border-radius: 120px 120px 0 0;
+
+  position: relative;
+}
+
+.cockpit-window {
+  position: absolute;
+  top: 22px;
+
+  width: 28px;
+  height: 18px;
+
+  background: #e5e7eb;
+  border-radius: 12px;
+}
+
+.cockpit-window.left {
+  left: 52px;
+}
+
+.cockpit-window.right {
+  right: 52px;
+}
+
+/* ===========================
+   Column Header
+=========================== */
+
+.seat-header {
+  display: grid;
+
+  grid-template-columns:
+    34px
+    repeat(3, 34px)
+    42px
+    repeat(3, 34px);
+
+  justify-content: center;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-bottom: 14px;
+}
+
+.row-number-placeholder {
+  width: 55px;
+}
+
+.seat-column {
+  text-align: center;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  color: #4b5563;
+}
+
+.aisle-header {
+  text-align: center;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  letter-spacing: 2px;
+
+  color: #9aa3b2;
+}
+
+/* ===========================
+   Rows
+=========================== */
+
+.seat-row {
+  display: grid;
+
+  grid-template-columns:
+    34px
+    repeat(3, 34px)
+    42px
+    repeat(3, 34px);
+
+  gap: 8px;
+
+  justify-content: center;
+  align-items: center;
+
+  margin-bottom: 10px;
+}
+
+.row-number {
+  text-align: center;
+
+  font-weight: 700;
+
+  color: #546170;
+}
+
+.aisle-space {
+  height: 34px;
+}
+
+/* ===========================
+   Exit Row
+=========================== */
+
+.exit-row-banner {
+  margin: 18px auto;
+
+  width: 430px;
+  max-width: 100%;
+
+  padding: 10px;
+
+  text-align: center;
+
+  background: #ffebee;
+
+  border: 1px solid #ef9a9a;
+
+  color: #d32f2f;
+
+  font-weight: 700;
+
+  border-radius: 10px;
+
+  letter-spacing: 2px;
+}
+
+/* ===========================
+   Wing
+=========================== */
+
+.wing-banner {
+  margin: 20px auto;
+
+  width: 450px;
+  max-width: 100%;
+
+  padding: 10px;
+
+  text-align: center;
+
+  background: #eef5ff;
+
+  border: 1px solid #c7daf8;
+
+  color: #ff4b2b;
+
+  font-weight: 700;
+
+  border-radius: 10px;
+}
+
+/* ===========================
+   Tail
+=========================== */
+
+.aircraft-tail {
+  width: 96px;
+  height: 45px;
+
+  margin: 28px auto 0;
+
+  border: 0;
+  border-top: none;
+
+  border-radius: 0 0 80px 80px;
+}
+
+/* ===========================
+   Scrollbar
+=========================== */
+
+.seat-map-wrapper::-webkit-scrollbar {
+  height: 10px;
+}
+
+.seat-map-wrapper::-webkit-scrollbar-thumb {
+  background: #cfd8e3;
+  border-radius: 10px;
+}
+
+.seat-map-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media (max-width: 992px) {
+
+  .seat-map {
+    padding: 20px;
+  }
+
+  .aircraft {
+    min-width: 610px;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .seat-map-header h2 {
+    font-size: 20px;
+  }
+
+  .aircraft {
+    min-width: 590px;
+    padding: 26px 18px 34px;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .seat-map {
+    padding: 16px;
+  }
+
+  .aircraft {
+    min-width: 560px;
+  }
+
+}

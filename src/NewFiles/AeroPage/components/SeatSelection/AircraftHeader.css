@@ -1,0 +1,193 @@
+.aircraft-header {
+  padding: 24px;
+}
+
+.flight-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.airline {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.airline-logo {
+  width: 56px;
+  height: 56px;
+
+  border-radius: 50%;
+
+  background: #1565c0;
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.airline h3 {
+  margin: 0;
+  font-size: 20px;
+  color: #1b1f28;
+}
+
+.airline span {
+  color: #666;
+  font-size: 14px;
+}
+
+.aircraft-name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  background: #eef6ff;
+
+  padding: 10px 18px;
+
+  border-radius: 30px;
+
+  color: #1565c0;
+
+  font-weight: 600;
+}
+
+.route-section {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+
+  margin-bottom: 30px;
+}
+
+.city {
+  display: flex;
+  flex-direction: column;
+}
+
+.city:first-child {
+  align-items: flex-start;
+}
+
+.city:last-child {
+  align-items: flex-end;
+}
+
+.airport-code {
+  font-size: 36px;
+  font-weight: 700;
+  color: #1c2534;
+}
+
+.city-name {
+  color: #7a8797;
+  margin-top: 4px;
+}
+
+.time {
+  margin-top: 10px;
+  font-weight: 600;
+  color: #1565c0;
+}
+
+.route-line {
+  display: flex;
+  align-items: center;
+  width: 220px;
+}
+
+.line {
+  flex: 1;
+  height: 2px;
+  background: #d8e0ea;
+}
+
+.plane-icon {
+  margin: 0 14px;
+  color: #1565c0;
+  transform: rotate(90deg);
+}
+
+.flight-info {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.info-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 16px;
+
+  background: #f8fafc;
+
+  border-radius: 12px;
+}
+
+.info-box svg {
+  color: #1565c0;
+  font-size: 22px;
+}
+
+.info-box label {
+  display: block;
+  font-size: 12px;
+  color: #8a94a6;
+}
+
+.info-box p {
+  margin-top: 4px;
+  font-weight: 600;
+  color: #1b1f28;
+}
+
+@media (max-width: 900px) {
+
+  .flight-info {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .route-line {
+    width: 120px;
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  .flight-top {
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .route-section {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .route-line {
+    width: 100%;
+  }
+
+  .city,
+  .city:first-child,
+  .city:last-child {
+    align-items: center;
+  }
+
+  .flight-info {
+    grid-template-columns: 1fr;
+  }
+
+}

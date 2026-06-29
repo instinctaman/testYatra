@@ -1,8 +1,8 @@
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import api from "../services/api";
-// import { useLocation } from "react-router-dom";
+
+import { useLocation } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
-import { useEffect } from "react";
 import FilterPanel from "../components/FilterPanel";
 
 import heroBg from "../assets/ui/assets/img/bg/breadcrumb-04.jpg";
@@ -485,6 +485,8 @@ export default function AirSearchUI() {
     });
 
   const airlines = [...new Set(flights.map((flight) => flight.airline))];
+
+  const fetchFlights = useCallback(async () => {
   useEffect(() => {
     if (!origin || !destination || !departureDate) {
       return;
@@ -492,8 +494,6 @@ export default function AirSearchUI() {
 
     fetchFlights();
   }, [origin, destination, departureDate]);
-
-  const fetchFlights = async () => {
     try {
       const response = await api.post("/flight/search", {
         origin,
@@ -510,7 +510,22 @@ export default function AirSearchUI() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [
+    searchData.adults,
+    searchData.children,
+    searchData.departureDate,
+    searchData.destination,
+    searchData.infants,
+    searchData.origin,
+  ]);
+
+  useEffect(() => {
+    if (!searchData.origin) {
+      return;
+    }
+
+    fetchFlights();
+  }, [fetchFlights, searchData.origin]);
   return (
     <main className="airkit-page">
       <section

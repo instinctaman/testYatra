@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
 import homeOneImage from "../assets/ui/assets/img/menu/aeroplane.jfif";
-import FilterCards from "./FilteredCards";
 
 
 const flights = [
@@ -61,6 +60,8 @@ const flights = [
 ];
 
 const FilteredCards = () => {
+    const [selectedFlight, setSelectedFlight] = useState(flights[0]?.id);
+
     return (
         <div className="airkit-flight-list">
             {flights.map((flight) => (
@@ -73,6 +74,23 @@ const FilteredCards = () => {
             ))}
         </div>
     )
+}
+
+function FlightCard({ flight, selected, onSelect }) {
+    return (
+        <article
+            className={`flight-card ${selected ? "selected" : ""}`}
+            onClick={() => onSelect(flight.id)}
+        >
+            <img src={flight.image} alt={flight.airline} />
+            <div>
+                <h3>{flight.airline}</h3>
+                <p>{flight.code} · {flight.from} → {flight.to}</p>
+                <small>{flight.depart} - {flight.arrive} · {flight.duration} · {flight.stops}</small>
+            </div>
+            <strong>{flight.price}</strong>
+        </article>
+    );
 }
 
 export default FilteredCards;

@@ -5,7 +5,7 @@ import api from "../services/api";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "../assets/css/style.css";
 
-function Auth({ isOpen, onClose, showHero = true }) {
+function Auth({ isOpen, onClose, showHero = true, initialMode = "login" }) {
   const [emailVerificationStatus, setEmailVerificationStatus] =
     useState("idle");
   const [otpType, setOtpType] = useState("");
@@ -13,7 +13,7 @@ function Auth({ isOpen, onClose, showHero = true }) {
 
   const [isAuthOpen, setIsAuthOpen] = useState(false);
 
-  const [isSignUp, setIsSignUp] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(initialMode === "signup");
   const [registerContactMethod, setRegisterContactMethod] = useState("email");
   const [loginContactMethod, setLoginContactMethod] = useState("email");
   const [otpStatus, setOtpStatus] = useState("idle");

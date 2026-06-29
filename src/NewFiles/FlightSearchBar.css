@@ -1,0 +1,756 @@
+/* FLightSearchCard.css - Complete Styles */
+/* CARD */
+.fsb-card {
+  max-width: 1320px !important;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 24px rgba(0, 0, 0, 0.10);
+  padding: 0 0 20px 0;
+  width: 100%;
+  max-width: 1100px;
+  overflow: visible;
+}
+
+/* NAV */
+.fsb-nav-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 16px 24px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.fsb-nav-tab {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 12px 20px;
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 600;
+  color: #555;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.18s;
+  margin-bottom: -1px;
+  border-radius: 0;
+}
+
+.fsb-nav-tab:hover { 
+  color: #c0392b; 
+}
+
+.fsb-nav-tab.fsb-nav-active {
+  color: #fff;
+  background: #c0392b;
+  border-radius: 20px;
+  border-bottom: 3px solid transparent;
+  margin-bottom: 6px;
+  padding: 8px 18px;
+}
+
+.fsb-nav-icon { 
+  font-size: 15px; 
+}
+
+/* TRIP TYPE */
+.fsb-trip-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 24px 10px;
+}
+
+.fsb-radio-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  cursor: pointer;
+  padding: 6px 16px 6px 10px;
+  border-radius: 20px;
+  border: 1.5px solid #ddd;
+  transition: all 0.18s;
+  user-select: none;
+}
+
+.fsb-radio-label:hover { 
+  border-color: #c0392b; 
+  color: #c0392b; 
+}
+
+.fsb-radio-label.fsb-radio-active { 
+  border-color: #c0392b; 
+  color: #c0392b; 
+}
+
+.fsb-radio-circle {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid blue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.18s;
+  flex-shrink: 0;
+}
+
+.fsb-radio-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #c0392b;
+}
+
+.fsb-radio-hidden { 
+  display: none; 
+}
+
+/* FIELDS OUTER */
+.fsb-fields-outer {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin: 0 20px;
+  overflow: visible;
+  position: relative;
+  background: #fff;
+}
+
+.fsb-field-cell {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  position: relative;
+  min-width: 0;
+  border-right: 1px solid #e8e8e8;
+}
+
+.fsb-field-cell:last-of-type { 
+  border-right: none; 
+}
+
+.fsb-field-inner {
+  padding: 14px 16px;
+  cursor: pointer;
+  min-height: 80px;
+  transition: background 0.18s;
+  box-sizing: border-box;
+}
+
+.fsb-field-inner:hover { 
+  background: #f5f8ff; 
+}
+
+.fsb-field-label {
+  font-size: 11px;
+  color: #888;
+  font-weight: 500;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.fsb-big-city {
+  font-size: 20px;
+  font-weight: 800;
+  color: #1a1a2e;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fsb-sub-city {
+  font-size: 11px;
+  color: #888;
+  margin-top: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* DATE CELL */
+.fsb-date-cell .fsb-field-inner {
+  min-height: 82px;
+}
+
+.fsb-return-disabled { 
+  opacity: 0.55; 
+}
+
+.fsb-add-date { 
+  font-size: 18px; 
+  font-weight: 800; 
+  color: #c0392b; 
+}
+
+/* SWAP BUTTON */
+.fsb-swap-btn {
+  position: absolute;
+  left: calc(2 * 100% / 10.03);
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1.5px solid #c0392b;
+  background: #fff;
+  color: #c0392b;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
+  transition: all 0.2s;
+}
+
+.fsb-swap-btn:hover {
+  background: #c0392b;
+  color: #fff;
+  transform: translate(-50%, -50%) rotate(180deg);
+}
+
+/* TRAVELLERS */
+.fsb-traveller-count {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.fsb-person-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+/* DROPDOWNS */
+.fsb-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  min-width: 320px;
+  max-height: 320px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.14);
+  z-index: 200;
+  overflow: hidden;
+  border: 1px solid #eee;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #c0392b #f1f1f1;
+}
+
+.fsb-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+
+.fsb-dropdown::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.fsb-dropdown::-webkit-scrollbar-thumb {
+  background: #c0392b;
+  border-radius: 10px;
+}
+
+.fsb-dropdown-input {
+  width: 100%;
+  border: none;
+  border-bottom: 1.5px solid #eee;
+  padding: 12px 16px;
+  font-size: 14px;
+  outline: none;
+  background: #f9f9f9;
+}
+
+.fsb-dropdown-item {
+  padding: 11px 16px;
+  cursor: pointer;
+  transition: background 0.13s;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.fsb-dropdown-item:hover { 
+  background: #f0f7ff; 
+}
+
+.fsb-drop-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fsb-drop-city { 
+  font-size: 14px; 
+  font-weight: 700; 
+  color: #1a1a2e; 
+}
+
+.fsb-drop-airport { 
+  font-size: 11px; 
+  color: #999; 
+  margin-top: 2px; 
+}
+
+.fsb-drop-code { 
+  font-size: 17px; 
+  font-weight: 800; 
+  color: #c0392b; 
+  min-width: 44px; 
+  text-align: right; 
+}
+
+/* TRAVELLER DROPDOWN */
+.fsb-traveller-dropdown { 
+  right: 0; 
+  left: auto; 
+  min-width: 290px; 
+  padding: 16px; 
+}
+
+.fsb-traveller-section { 
+  padding: 14px 16px; 
+  border-bottom: 1.5px solid #eee; 
+}
+
+.fsb-traveller-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 0;
+  border-top: 1px solid #f5f5f5;
+}
+
+.fsb-traveller-row:first-child { 
+  border-top: none; 
+}
+
+.fsb-tr-label { 
+  font-size: 13px; 
+  font-weight: 700; 
+  color: #1a1a2e; 
+}
+
+.fsb-tr-sub { 
+  font-size: 11px; 
+  color: #999; 
+  margin-top: 1px; 
+}
+
+.fsb-counter { 
+  display: flex; 
+  align-items: center; 
+  gap: 10px; 
+}
+
+.fsb-counter-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1.5px solid #c0392b;
+  background: #fff;
+  color: #c0392b;
+  font-size: 17px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.13s;
+}
+
+.fsb-counter-btn:hover { 
+  background: #c0392b; 
+  color: #fff; 
+}
+
+.fsb-counter-val { 
+  font-size: 16px; 
+  font-weight: 800; 
+  color: #1a1a2e; 
+  min-width: 18px; 
+  text-align: center; 
+}
+
+.fsb-class-section { 
+  padding: 12px 16px; 
+  border-bottom: 1.5px solid #eee; 
+}
+
+.fsb-class-title { 
+  margin-bottom: 8px; 
+}
+
+.fsb-class-grid { 
+  display: grid; 
+  grid-template-columns: 1fr 1fr; 
+  gap: 7px; 
+}
+
+.fsb-class-btn {
+  padding: 7px 8px;
+  border-radius: 7px;
+  border: 1.5px solid #ddd;
+  background: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  color: #555;
+  cursor: pointer;
+  transition: all 0.13s;
+}
+
+.fsb-class-btn:hover { 
+  border-color: #c0392b; 
+  color: #c0392b; 
+}
+
+.fsb-class-active { 
+  background: #c0392b !important; 
+  border-color: #c0392b !important; 
+  color: #fff !important; 
+}
+
+.fsb-apply-btn {
+  width: 100%;
+  padding: 11px;
+  background: #c0392b;
+  color: #fff;
+  border: none;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+
+.fsb-apply-btn:hover { 
+  background: #a93226; 
+}
+
+/* FARE & POPULAR */
+.fsb-fare-row,
+.fsb-popular-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 24px 4px;
+  flex-wrap: wrap;
+}
+
+.fsb-section-label {
+  font-size: 13px;
+  color: #666;
+  font-weight: 600;
+  margin-right: 4px;
+}
+
+.fsb-fare-btn,
+.fsb-popular-btn {
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 1.5px solid #ddd;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  color: #444;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.fsb-fare-btn:hover,
+.fsb-popular-btn:hover {
+  border-color: #c0392b;
+  color: #c0392b;
+}
+
+.fsb-fare-active {
+  border-color: #c0392b !important;
+  color: #c0392b !important;
+  background: #fff5f5 !important;
+  font-weight: 700 !important;
+}
+
+/* CALENDAR */
+.fsb-calendar-dropdown {
+  width: 300px;
+}
+
+.fsb-calendar {
+  padding: 16px;
+}
+
+.fsb-calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.fsb-calendar-header button {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.fsb-calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 6px;
+}
+
+.fsb-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.fsb-calendar-day {
+  padding: 10px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.fsb-calendar-day:hover {
+  background: #f0f8ff;
+}
+
+.fsb-calendar-day.fsb-selected {
+  background: #c0392b;
+  color: white;
+  font-weight: 600;
+}
+
+.fsb-calendar-day.fsb-disabled {
+  opacity: 0.4;
+  color: #999;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.fsb-calendar-day.fsb-disabled:hover {
+  background: none;
+}
+
+.fsb-calendar-empty {
+  height: 40px;
+}
+
+/* SEARCH BUTTON */
+.fbs-searching-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  margin-left:auto;
+}
+
+.fsb-search-btn {
+  text-decoration: none;
+  padding: 14px 60px;
+  background: #c0392b;
+  color: #fff;
+  border: none;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  border-radius: 30px;
+  min-width: 100px;
+  transition: all 0.18s;
+  letter-spacing: 0.3px;
+}
+
+.fsb-search-btn:hover { 
+  background: #a93226; 
+  transform: scale(1.03); 
+}
+
+.fsb-search-btn:active { 
+  transform: scale(0.97); 
+}
+
+.fsb-search-icon { 
+  font-size: 18px; 
+}
+
+/* ===================== RESPONSIVE ===================== */
+
+@media (max-width: 1024px) {
+  .fsb-card { margin: 10px; }
+  .fsb-fields-outer { margin: 0 16px; }
+}
+
+@media (max-width: 900px) {
+  .fsb-fields-outer {
+    flex-direction: column;
+    border-radius: 12px;
+  }
+
+  .fsb-field-cell {
+    border-right: none;
+    border-bottom: 1px solid #e8e8e8;
+  }
+
+  .fsb-field-cell:last-child {
+    border-bottom: none;
+  }
+
+  .fsb-swap-btn {
+    left: 85%;
+    top: 22%;
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
+  .fsb-swap-btn:hover {
+    transform: translate(-50%, -50%) rotate(270deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .fsb-nav-row {
+    padding: 12px 16px;
+    gap: 4px;
+  }
+
+  .fsb-nav-tab {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+
+  .fsb-trip-row {
+    padding: 12px 16px;
+    gap: 8px;
+  }
+
+  .fsb-fields-outer {
+    margin: 0 12px;
+  }
+
+  .fsb-field-inner {
+    padding: 12px 14px;
+    min-height: 72px;
+  }
+
+  .fsb-big-city {
+    font-size: 18px;
+  }
+
+  .fsb-search-btn {
+    padding: 14px 40px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .fsb-card {
+    border-radius: 12px;
+    padding-bottom: 16px;
+  }
+
+  .fsb-nav-row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 10px 12px;
+  }
+
+  .fsb-fields-outer {
+    margin: 0 8px;
+  }
+
+  .fsb-fare-row,
+  .fsb-popular-row {
+    padding: 12px 16px 8px;
+    gap: 6px;
+  }
+
+  .fsb-fare-btn,
+  .fsb-popular-btn {
+    padding: 5px 12px;
+    font-size: 12.5px;
+  }
+
+  .fsb-dropdown {
+    min-width: calc(100% - 20px);
+    left: 10px;
+    right: 10px;
+    max-height: 280px;
+  }
+
+  .fsb-search-wrapper {
+    margin-top: 16px;
+  }
+
+  .fsb-search-btn {
+    max-width: 100%;
+  }
+}
+
+/* Home theme alignment and steadier search hover */
+.fsb-nav-tab:hover,
+.fsb-radio-label:hover,
+.fsb-fare-btn:hover,
+.fsb-popular-btn:hover {
+  color: #087dd1;
+  border-color: #087dd1;
+}
+
+.fsb-nav-tab.fsb-nav-active,
+.fsb-radio-dot,
+.fsb-counter-btn:hover,
+.fsb-apply-btn,
+.fsb-calendar-day.fsb-selected {
+  background: #087dd1;
+}
+
+.fsb-radio-label.fsb-radio-active,
+.fsb-fare-active {
+  border-color: #087dd1 !important;
+  color: #087dd1 !important;
+  background: #f2f9fe !important;
+}
+
+.fsb-swap-btn,
+.fsb-counter-btn {
+  border-color: #087dd1;
+  color: #087dd1;
+}
+
+.fsb-swap-btn:hover,
+.fsb-apply-btn:hover {
+  background: #055fa5;
+}
+
+.fsb-search-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 190px;
+  padding: 13px 34px;
+  background: #087dd1;
+  box-shadow: 0 5px 14px rgba(8, 125, 209, .22);
+}
+
+.fsb-search-btn:hover {
+  background: #055fa5;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(8, 125, 209, .28);
+}

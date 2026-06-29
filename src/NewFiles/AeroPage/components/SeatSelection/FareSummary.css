@@ -1,0 +1,187 @@
+.fare-summary {
+  padding: 16px;
+  border-radius: 4px;
+}
+
+.fare-header {
+  margin-bottom: 16px;
+}
+
+.fare-header h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin: 0;
+
+  font-size: 18px;
+  color: #1b1f28;
+}
+
+.fare-header svg {
+  color: #ff4b2b;
+}
+
+.summary-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  margin-bottom: 18px;
+}
+
+.summary-section h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #4b5563;
+}
+
+.summary-passenger {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 10px;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+
+  background: #fafbfc;
+}
+
+.summary-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.summary-left svg {
+  color: #ff4b2b;
+}
+
+.passenger-name {
+  display: block;
+  font-weight: 600;
+  color: #1b1f28;
+}
+
+.passenger-type {
+  font-size: 13px;
+  color: #7c8696;
+}
+
+.summary-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.seat-tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  background: #ff4b2b;
+  color: white;
+
+  padding: 6px 12px;
+
+  border-radius: 20px;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.seat-price-value {
+  font-weight: 700;
+  color: #1b1f28;
+}
+
+.no-seat {
+  color: #9aa3b2;
+}
+
+.price-breakup {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 14px;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+
+  margin-bottom: 10px;
+
+  color: #374151;
+}
+
+.divider {
+  height: 1px;
+  background: #e2e8f0;
+  margin: 18px 0;
+}
+
+.total-row {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.addon-row {
+  color: #ff4b2b;
+}
+
+.final-row {
+  padding-top: 12px;
+  margin-top: 6px;
+  border-top: 1px dashed #cdd8e1;
+  font-size: 18px;
+}
+
+.total-row strong {
+  color: #ff4b2b;
+}
+
+.summary-footer {
+  margin-top: 16px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 12px;
+
+  border-radius: 10px;
+
+  background: #e8f5e9;
+
+  color: #2e7d32;
+
+  font-size: 14px;
+}
+
+.summary-footer svg {
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+
+  .summary-passenger {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .summary-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .fare-summary {
+    padding: 18px;
+  }
+
+}
