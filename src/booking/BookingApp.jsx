@@ -7,10 +7,11 @@ import {
   useNavigate,
 } from "react-router-dom";
 import FlightSearchBar from "../NewFiles/FlightSearchBar";
-import SeatSelection from "../NewFiles/AeroPage/page/SeatSelection/SeatSelection";
+import SeatSelection from "../NewFiles/AeroPage/page/SeatSelection/SeatSelect";
 import Auth from "../pages/Auth";
 import heroImage from "../assets/images/plane.jpg";
 import logo from "../assets/images/logo/logo-white.png";
+import Barcode from "react-barcode";
 import "./booking.css";
 
 const cities = [
@@ -204,12 +205,50 @@ const fareOptions = [
 ];
 
 const fareServiceRows = [
-  { icon: "bi-clock-history", label: "Cancellation", note: "From departure time", values: ["0h - 3h: Non Refundable|3h - 3d: INR 4,999|3d - 365d: INR 3,999", "0h - 3h: Non Refundable|3h - 24h: INR 3,499|24h - 365d: INR 2,499", "0h - 3h: Non Refundable|3h - 24h: INR 1,599|24h - 3d: INR 1,199|3d - 365d: INR 799"] },
-  { icon: "bi-calendar3", label: "Date Change", note: "From departure time", values: ["0h - 3h: Non Changeable|3h - 3d: INR 2,999|3d - 365d: INR 2,999", "0h - 3h: Non Changeable|3h - 3d: INR 999|3d - 365d: INR 299", "0h - 3h: Non Changeable|3h - 3d: INR 299|3d - 365d: Free Date Change"] },
-  { icon: "bi-grid-3x3-gap-fill", label: "Seat Selection", values: ["Standard: Chargeable|XL seats: Chargeable", "Standard: FREE|XL seats: Chargeable", "Standard: FREE|XL seats: FREE"] },
-  { icon: "bi-suitcase2-fill", label: "Checked Bag", values: ["15 Kgs", "20 Kgs", "25 Kgs"] },
-  { icon: "bi-backpack2-fill", label: "Hand Bag", values: ["7 Kgs", "7 Kgs", "7 Kgs"] },
-  { icon: "bi-cup-hot-fill", label: "Meal", values: ["Chargeable", "Complimentary", "Complimentary"] },
+  {
+    icon: "bi-clock-history",
+    label: "Cancellation",
+    note: "From departure time",
+    values: [
+      "0h - 3h: Non Refundable|3h - 3d: INR 4,999|3d - 365d: INR 3,999",
+      "0h - 3h: Non Refundable|3h - 24h: INR 3,499|24h - 365d: INR 2,499",
+      "0h - 3h: Non Refundable|3h - 24h: INR 1,599|24h - 3d: INR 1,199|3d - 365d: INR 799",
+    ],
+  },
+  {
+    icon: "bi-calendar3",
+    label: "Date Change",
+    note: "From departure time",
+    values: [
+      "0h - 3h: Non Changeable|3h - 3d: INR 2,999|3d - 365d: INR 2,999",
+      "0h - 3h: Non Changeable|3h - 3d: INR 999|3d - 365d: INR 299",
+      "0h - 3h: Non Changeable|3h - 3d: INR 299|3d - 365d: Free Date Change",
+    ],
+  },
+  {
+    icon: "bi-grid-3x3-gap-fill",
+    label: "Seat Selection",
+    values: [
+      "Standard: Chargeable|XL seats: Chargeable",
+      "Standard: FREE|XL seats: Chargeable",
+      "Standard: FREE|XL seats: FREE",
+    ],
+  },
+  {
+    icon: "bi-suitcase2-fill",
+    label: "Checked Bag",
+    values: ["15 Kgs", "20 Kgs", "25 Kgs"],
+  },
+  {
+    icon: "bi-backpack2-fill",
+    label: "Hand Bag",
+    values: ["7 Kgs", "7 Kgs", "7 Kgs"],
+  },
+  {
+    icon: "bi-cup-hot-fill",
+    label: "Meal",
+    values: ["Chargeable", "Complimentary", "Complimentary"],
+  },
 ];
 
 const money = (value) => `₹${Number(value).toLocaleString("en-IN")}`;
@@ -267,12 +306,24 @@ function Header({ transparent = false }) {
         <nav>
           <a href="#offers">Offers</a>
           <a href="#support">Support</a>
-          <button className="sb-mytrips"><i className="bi bi-suitcase2" /> My Trips</button>
-          <button className="sb-signup" onClick={() => openAuth("signup")}>Sign up</button>
-          <button className="sb-login" onClick={() => openAuth("login")}><i className="bi bi-person-circle" /> Login</button>
+          <button className="sb-mytrips">
+            <i className="bi bi-suitcase2" /> My Trips
+          </button>
+          <button className="sb-signup" onClick={() => openAuth("signup")}>
+            Sign up
+          </button>
+          <button className="sb-login" onClick={() => openAuth("login")}>
+            <i className="bi bi-person-circle" /> Login
+          </button>
         </nav>
       </header>
-      <Auth key={authMode} isOpen={authOpen} onClose={() => setAuthOpen(false)} showHero={false} initialMode={authMode} />
+      <Auth
+        key={authMode}
+        isOpen={authOpen}
+        onClose={() => setAuthOpen(false)}
+        showHero={false}
+        initialMode={authMode}
+      />
     </>
   );
 }
@@ -524,7 +575,9 @@ function FareDrawer({
   to,
 }) {
   if (!flight) return null;
-  const selectedIndex = fareOptions.findIndex((fare) => fare.id === selectedFare);
+  const selectedIndex = fareOptions.findIndex(
+    (fare) => fare.id === selectedFare,
+  );
   const total = (flight.price + fareOptions[selectedIndex].extra) * travellers;
   return (
     <div className="sb-modal-backdrop" onMouseDown={onClose}>
@@ -537,33 +590,65 @@ function FareDrawer({
         </div>
         <div className="sb-fare-flight-strip">
           <b>ONWARD</b>
-          <span className="sb-fare-airline-mark">{airlines[flight.airline].code}</span>
-          <strong>{flight.no} &nbsp; {from} → {to} &nbsp; {flight.depart} - {flight.arrive}</strong>
+          <span className="sb-fare-airline-mark">
+            {airlines[flight.airline].code}
+          </span>
+          <strong>
+            {flight.no} &nbsp; {from} → {to} &nbsp; {flight.depart} -{" "}
+            {flight.arrive}
+          </strong>
         </div>
         <div className="sb-fare-scroll">
           <div className="sb-fare-compare">
             <div className="sb-service-title">Services</div>
             {fareOptions.map((fare) => (
-              <button key={fare.id} className={`sb-fare-column-head ${selectedFare === fare.id ? "selected" : ""}`} onClick={() => setSelectedFare(fare.id)}>
-                <i className={`bi ${selectedFare === fare.id ? "bi-record-circle-fill" : "bi-circle"}`} />
-                <span><strong>{money(flight.price + fare.extra)}</strong><small>{fare.name}</small></span>
+              <button
+                key={fare.id}
+                className={`sb-fare-column-head ${selectedFare === fare.id ? "selected" : ""}`}
+                onClick={() => setSelectedFare(fare.id)}
+              >
+                <i
+                  className={`bi ${selectedFare === fare.id ? "bi-record-circle-fill" : "bi-circle"}`}
+                />
+                <span>
+                  <strong>{money(flight.price + fare.extra)}</strong>
+                  <small>{fare.name}</small>
+                </span>
               </button>
             ))}
             {fareServiceRows.map((row) => (
               <div className="sb-fare-row" key={row.label}>
-                <div className="sb-service-label"><i className={`bi ${row.icon}`} /><span><b>{row.label}</b>{row.note && <small>{row.note}</small>}</span></div>
+                <div className="sb-service-label">
+                  <i className={`bi ${row.icon}`} />
+                  <span>
+                    <b>{row.label}</b>
+                    {row.note && <small>{row.note}</small>}
+                  </span>
+                </div>
                 {row.values.map((value, index) => (
-                  <button key={index} className={`sb-fare-cell ${selectedIndex === index ? "selected" : ""}`} onClick={() => setSelectedFare(fareOptions[index].id)}>
-                    {value.split("|").map((line) => <span key={line}>{line}</span>)}
+                  <button
+                    key={index}
+                    className={`sb-fare-cell ${selectedIndex === index ? "selected" : ""}`}
+                    onClick={() => setSelectedFare(fareOptions[index].id)}
+                  >
+                    {value.split("|").map((line) => (
+                      <span key={line}>{line}</span>
+                    ))}
                   </button>
                 ))}
               </div>
             ))}
           </div>
-          <p className="sb-fare-important"><b>Important:</b> Details are based on information provided by the airline. Fees apply per traveller and exclude the service fee.</p>
+          <p className="sb-fare-important">
+            <b>Important:</b> Details are based on information provided by the
+            airline. Fees apply per traveller and exclude the service fee.
+          </p>
         </div>
         <div className="sb-modal-foot">
-          <span><b>{money(total)}</b> / {travellers > 1 ? `${travellers} adults` : "adult"}</span>
+          <span>
+            <b>{money(total)}</b> /{" "}
+            {travellers > 1 ? `${travellers} adults` : "adult"}
+          </span>
           <button className="sb-primary" onClick={onContinue}>
             Book Now
           </button>
@@ -660,34 +745,34 @@ function Results({ search, setSearch, booking, setBooking }) {
             </button>
           </div>
           <section>
-             <h4>Stops</h4>
+            <h4>Stops</h4>
 
-             <label>
-    <input
-      type="checkbox"
-      checked={stopFilters.includes("0")}
-      onChange={() => toggleStop("0")}
-    />
-    <span>Non stop</span>
-    <small>from ₹4,899</small>
-             </label>
+            <label>
+              <input
+                type="checkbox"
+                checked={stopFilters.includes("0")}
+                onChange={() => toggleStop("0")}
+              />
+              <span>Non stop</span>
+              <small>from ₹4,899</small>
+            </label>
 
-   {[
-     ["1", "1 stop", "from INR 4,560"],
-     ["2", "2 stops", "from INR 4,980"],
-     ["multi", "Multi stops", "from INR 4,420"],
-   ].map(([id, label, price]) => (
-     <label key={id}>
-       <input
-         type="checkbox"
-         checked={stopFilters.includes(id)}
-         onChange={() => toggleStop(id)}
-       />
-       <span>{label}</span>
-       <small>{price}</small>
-    </label>
-  ))}
-</section>
+            {[
+              ["1", "1 stop", "from INR 4,560"],
+              ["2", "2 stops", "from INR 4,980"],
+              ["multi", "Multi stops", "from INR 4,420"],
+            ].map(([id, label, price]) => (
+              <label key={id}>
+                <input
+                  type="checkbox"
+                  checked={stopFilters.includes(id)}
+                  onChange={() => toggleStop(id)}
+                />
+                <span>{label}</span>
+                <small>{price}</small>
+              </label>
+            ))}
+          </section>
           <section>
             <h4>Airlines</h4>
             {Object.keys(airlines).map((a) => (
@@ -832,7 +917,12 @@ function Results({ search, setSearch, booking, setBooking }) {
 }
 
 function Stepper({ active }) {
-  const steps = ["Traveller details", "Seat selection", "Payment", "Confirmation"];
+  const steps = [
+    "Traveller details",
+    "Seat selection",
+    "Payment",
+    "Confirmation",
+  ];
   return (
     <div className="sb-stepper">
       {steps.map((s, i) => (
@@ -848,13 +938,20 @@ function Stepper({ active }) {
   );
 }
 
-function PriceSummary({ search, booking, insurance = false, promo = false, seatCost = 0 }) {
+function PriceSummary({
+  search,
+  booking,
+  insurance = false,
+  promo = false,
+  seatCost = 0,
+}) {
   const base = (booking.flight.price + booking.fare.extra) * search.adults;
   const taxes = 899 * search.adults;
   const convenience = 349;
   const insuranceCost = insurance ? 249 * search.adults : 0;
   const discount = promo ? 500 : 0;
-  const total = base + taxes + convenience + insuranceCost + seatCost - discount;
+  const total =
+    base + taxes + convenience + insuranceCost + seatCost - discount;
   return (
     <aside className="sb-price-card">
       <h3>Fare summary</h3>
@@ -878,7 +975,12 @@ function PriceSummary({ search, booking, insurance = false, promo = false, seatC
           <b>{money(insuranceCost)}</b>
         </div>
       )}
-      {seatCost > 0 && <div><span>Seat selection</span><b>{money(seatCost)}</b></div>}
+      {seatCost > 0 && (
+        <div>
+          <span>Seat selection</span>
+          <b>{money(seatCost)}</b>
+        </div>
+      )}
       {promo && (
         <div className="sb-discount">
           <span>Promo discount</span>
@@ -988,7 +1090,14 @@ function Review({
     );
   const valid =
     travellers.length === search.adults &&
-    travellers.every((t) => t.first.trim() && t.last.trim() && t.gender && t.dateOfBirth && t.nationality) &&
+    travellers.every(
+      (t) =>
+        t.first.trim() &&
+        t.last.trim() &&
+        t.gender &&
+        t.dateOfBirth &&
+        t.nationality,
+    ) &&
     /\S+@\S+\.\S+/.test(contact.email) &&
     contact.phone.length >= 10;
   return (
@@ -1007,7 +1116,10 @@ function Review({
               </span>
               <div>
                 <h2>Enter passenger details</h2>
-                <p>Enter details exactly as shown on the passenger's government ID.</p>
+                <p>
+                  Enter details exactly as shown on the passenger's government
+                  ID.
+                </p>
               </div>
             </div>
             {travellers.map((t, i) => (
@@ -1050,11 +1162,23 @@ function Review({
                   </label>
                   <label>
                     Date of birth
-                    <input type="date" max={offsetDate(0)} value={t.dateOfBirth || ""} onChange={(e) => updateTraveller(i, "dateOfBirth", e.target.value)} />
+                    <input
+                      type="date"
+                      max={offsetDate(0)}
+                      value={t.dateOfBirth || ""}
+                      onChange={(e) =>
+                        updateTraveller(i, "dateOfBirth", e.target.value)
+                      }
+                    />
                   </label>
                   <label>
                     Nationality
-                    <select value={t.nationality || ""} onChange={(e) => updateTraveller(i, "nationality", e.target.value)}>
+                    <select
+                      value={t.nationality || ""}
+                      onChange={(e) =>
+                        updateTraveller(i, "nationality", e.target.value)
+                      }
+                    >
                       <option value="">Select nationality</option>
                       <option value="Indian">Indian</option>
                       <option value="Nepalese">Nepalese</option>
@@ -1155,7 +1279,14 @@ function Review({
   );
 }
 
-function Payment({ search, booking, insurance, promo, selectedSeats, onConfirm }) {
+function Payment({
+  search,
+  booking,
+  insurance,
+  promo,
+  selectedSeats,
+  onConfirm,
+}) {
   const navigate = useNavigate();
   const [method, setMethod] = useState("upi");
   const [busy, setBusy] = useState(false);
@@ -1173,7 +1304,8 @@ function Payment({ search, booking, insurance, promo, selectedSeats, onConfirm }
       899 * search.adults +
       349 +
       (insurance ? 249 * search.adults : 0) -
-      (promo ? 500 : 0) + selectedSeats.reduce((sum, seat) => sum + seat.price, 0);
+      (promo ? 500 : 0) +
+      selectedSeats.reduce((sum, seat) => sum + seat.price, 0);
   const canPay =
     method === "upi"
       ? upi.includes("@")
@@ -1202,7 +1334,7 @@ function Payment({ search, booking, insurance, promo, selectedSeats, onConfirm }
       <Stepper active={3} />
       <main className="sb-checkout">
         <div className="sb-checkout-main">
-          <button className="sb-back-link" onClick={() => navigate("/seats")}> 
+          <button className="sb-back-link" onClick={() => navigate("/seats")}>
             <i className="bi bi-arrow-left" /> Back to seat selection
           </button>
           <h1>Choose payment method</h1>
@@ -1374,144 +1506,271 @@ function Payment({ search, booking, insurance, promo, selectedSeats, onConfirm }
   );
 }
 
-function Ticket({ search, booking, travellers, contact, confirmation, selectedSeats }) {
+function Ticket({
+  search,
+  booking,
+  travellers,
+  contact,
+  confirmation,
+  selectedSeats,
+}) {
   const navigate = useNavigate();
   if (!booking.flight || !confirmation) return <Navigate to="/" replace />;
+
   const f = booking.flight;
+  const pnrNumber = confirmation.pnr || "MCPIMQ";
+
+  // Date format utility function for cleaner rendering
+  const formatDateStr = (dateVal) => {
+    if (!dateVal) return "29 Jun 2026";
+    return new Date(dateVal).toLocaleDateString("en-IN", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+  };
+
   return (
     <div className="sb-ticket-page">
-      <div className="sb-no-print">
-        <Header />
-        <Stepper active={4} />
+      {/* Screen Controls: Web view buttons (Printing ke time auto-hide honge) */}
+      <div
+        className="sb-no-print"
+        style={{
+          textAlign: "center",
+          padding: "20px 0",
+          background: "#f4f7fa",
+          borderBottom: "1px solid #dfe7ef",
+        }}
+      >
+        <h2 style={{ margin: "0 0 10px 0", color: "#102a43" }}>
+          🎉 Booking Successfully Completed!
+        </h2>
+        <button
+          className="sb-primary"
+          onClick={() => window.print()}
+          style={{ padding: "12px 24px", fontSize: "14px", fontWeight: "600" }}
+        >
+          <i className="bi bi-printer" /> Print Ticket / Save PDF
+        </button>
+        <button
+          className="sb-outline"
+          onClick={() => navigate("/")}
+          style={{ marginLeft: "10px", padding: "12px 24px", fontSize: "14px" }}
+        >
+          <i className="bi bi-house" /> Back to Home
+        </button>
       </div>
-      <main className="sb-confirm-wrap">
-        <section className="sb-success sb-no-print">
-          <span>
-            <i className="bi bi-check-lg" />
-          </span>
-          <h1>Your trip is confirmed!</h1>
-          <p>
-            Pack your bags. We sent the e-ticket to <b>{contact.email}</b>.
-          </p>
-          <div>
-            <button className="sb-primary" onClick={() => window.print()}>
-              <i className="bi bi-printer" /> Print ticket
-            </button>
-            <button className="sb-outline" onClick={() => navigate("/")}>
-              <i className="bi bi-house" /> Back to home
-            </button>
-          </div>
-        </section>
-        <section className="sb-ticket">
-          <div className="sb-ticket-top">
-            <div className="sb-indigo-brand">
-              <b>{f.airline === "IndiGo" ? "IndiGo" : f.airline}</b>
-              <small>go IndiGo</small>
-            </div>
+
+      {/* Main Print Area: Matches Itinerary PDF structure exactly */}
+      <main className="printable-ticket">
+        {/* Top Header Block */}
+        <div className="ticket-header-strip">
+          <div className="airline-title">{f.airline || "IndiGo"}</div>
+          <div className="pnr-box">
             <div>
-              <small>E-TICKET / BOARDING PASS</small>
-              <small>BOOKING ID</small>
-              <b>{confirmation.bookingId}</b>
+              PNR/Booking Ref: <b>{pnrNumber}</b>
             </div>
+            <div className="status-badge">On-Hold</div>
           </div>
-          <div className="sb-ticket-status">
-            <span>
-              <i className="bi bi-check-circle-fill" /> CONFIRMED
-            </span>
+        </div>
+
+        <hr className="ticket-divider" />
+
+        {/* Passenger Info Row */}
+        <div className="ticket-section">
+          <h3>Passenger Information</h3>
+          <div className="passenger-row">
             <div>
-              <small>AIRLINE PNR</small>
-              <b>{confirmation.pnr}</b>
-            </div>
-          </div>
-          <div className="sb-ticket-route">
-            <div>
-              <small>
-                {dateLabel(search.departure, {
-                  weekday: "long",
-                  day: "2-digit",
-                  month: "long",
-                  year: "numeric",
-                })}
-              </small>
-              <b>{search.from}</b>
-              <span>{cities.find((c) => c.code === search.from)?.city}</span>
-              <em>{f.depart}</em>
-              <small>
-                {cities.find((c) => c.code === search.from)?.airport} ·{" "}
-                {f.depTerminal}
-              </small>
-            </div>
-            <div className="sb-ticket-flight">
-              <FlightLogo flight={f} />
-              <span>
-                <i className="bi bi-airplane-fill" />
+              <strong>
+                {travellers && travellers.length > 0
+                  ? `${travellers[0].title || "MR"} ${travellers[0].first || "Som"} ${travellers[0].last || "shekhar"}`
+                  : "MR Som shekhar"}
+              </strong>
+              <span
+                style={{
+                  marginLeft: "10px",
+                  color: "#65778a",
+                  fontSize: "13px",
+                }}
+              >
+                (Adult)
               </span>
-              <small>{f.duration} · {stopLabel(f.stops)}</small>
             </div>
+            <div style={{ fontSize: "13px", color: "#152536" }}>
+              <span>{contact.phone || "9870451929"}</span> |{" "}
+              <span>{contact.email || "Flight@yatrab2b.com"}</span>
+            </div>
+          </div>
+        </div>
+
+        <hr className="ticket-divider" />
+
+        {/* Matrix Block: Sector, Seat & Add-ons */}
+        <div className="journey-matrix">
+          <div className="matrix-col">
+            <small>Sector</small>
+            <b>
+              {search.from || f.from || "DEL"}-{search.to || f.to || "CCU"}
+            </b>
+          </div>
+          <div className="matrix-col">
+            <small>Seat</small>
+            <b>
+              {selectedSeats && selectedSeats.length > 0
+                ? selectedSeats.join(", ")
+                : "9A (Window)"}
+            </b>
+          </div>
+          <div className="matrix-col">
+            <small>6E Add-ons</small>
+            <b>CPTR, CPML</b>
+          </div>
+        </div>
+
+        <hr className="ticket-divider" />
+
+        {/* Flight Time & Route Details Container */}
+        <div className="flight-schedule-box">
+          <div className="schedule-row">
             <div>
-              <small>Arrival</small>
-              <b>{search.to}</b>
-              <span>{cities.find((c) => c.code === search.to)?.city}</span>
-              <em>{f.arrive}</em>
-              <small>
-                {cities.find((c) => c.code === search.to)?.airport} ·{" "}
-                {f.arrTerminal}
+              <span className="flight-badge">
+                {f.code || "6E 5096"} • {f.model || "A320"}
+              </span>
+              <small className="close-time">
+                ⚠️ Check-in/Bag drop closes: 16:00 hrs
               </small>
             </div>
-          </div>
-          <div className="sb-ticket-info">
-            <div>
-              <small>PASSENGER{travellers.length > 1 ? "S" : ""}</small>
-              {travellers.map((t, i) => (
-                <b key={i}>
-                  {t.gender} {t.first} {t.last} · Seat {selectedSeats[i]?.id || "--"}
-                </b>
-              ))}
-            </div>
-            <div>
-              <small>FARE</small>
-              <b>
-                {search.cabin} · {booking.fare.name}
-              </b>
-            </div>
-            <div>
-              <small>BAGGAGE</small>
-              <b>
-                7 kg cabin ·{" "}
-                {booking.fare.id === "value"
-                  ? 15
-                  : booking.fare.id === "flex"
-                    ? 20
-                    : 25}{" "}
-                kg check-in
-              </b>
-            </div>
-            <div>
-              <small>AMOUNT PAID</small>
-              <b>{money(confirmation.total)}</b>
+            <div style={{ fontSize: "12px", color: "#65778a" }}>
+              *Date of booking: {formatDateStr(new Date())}
             </div>
           </div>
-          <div className="sb-ticket-bottom">
-            <div className="sb-ticket-code-panel">
-            <div className="sb-barcode" aria-label={`Barcode ${confirmation.bookingId}`}>
-              {Array.from({ length: 76 }).map((_, i) => <i key={i} className={`bar-${i % 9}`} />)}
-              <small>{confirmation.bookingId} · {confirmation.pnr}</small>
+
+          <div className="route-details-grid">
+            <div className="route-point">
+              <h4>Departing</h4>
+              <b>{search.fromCity || f.fromCity || "Ghaziabad"}</b>
+              <p>{f.fromAirport || "HDO-Ghaziabad Airport"}</p>
+              <span className="time-stamp">
+                {f.depart || "17:00"}, {formatDateStr(search.departure)}
+              </span>
             </div>
-            <p>
-              <b>Important:</b> Carry a valid government photo ID. Web check-in
-              opens 48 hours before departure. Please arrive at least 2 hours
-              before the flight.
+
+            <div className="duration-center">
+              <span>Travel time {f.duration || "2 Hour 5 min"}</span>
+            </div>
+
+            <div className="route-point" style={{ textAlign: "right" }}>
+              <h4>Arriving</h4>
+              <b>{search.toCity || f.toCity || "Navi Mumbai"}</b>
+              <p>{f.toAirport || "NMI-Navi Mumbai Airport"}</p>
+              <span className="time-stamp">
+                {f.arrive || "19:05"}, {formatDateStr(search.departure)}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <hr className="ticket-divider" />
+
+        {/* Payment & Meta footer status */}
+        <div
+          className="meta-footer-info"
+          style={{
+            display: "flex",
+            justifyContent: "between",
+            alignItems: "center",
+          }}
+        >
+          <div style={{ flex: "1" }}>
+            <div>
+              Payment status: <b className="pending-text">Pending</b>
+            </div>
+            <p className="utc-note">
+              *Booking date reflects in UTC (Coordinated Universal Time), all
+              other timings mentioned are as per local TIME
             </p>
-            <span>Have a wonderful journey!</span>
           </div>
-          </div>
-        </section>
+
+          {/* Dynamic Render CSS Barcode matching PNR */}
+          <Barcode
+            value={pnrNumber}
+            format="CODE128"
+            width={1.5}
+            height={45}
+            displayValue={true}
+            fontSize={12}
+            margin={0}
+          />
+        </div>
+
+        <hr className="ticket-divider" />
+
+        {/* Baggage Information Table Section */}
+        <div className="ticket-section">
+          <h3>Baggage Information</h3>
+          <table className="baggage-table">
+            <thead>
+              <tr>
+                <th style={{ width: "8%" }}>S.No</th>
+                <th style={{ width: "25%" }}>Sector</th>
+                <th>Passenger Baggage Details</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style={{ textAlign: "center" }}>1</td>
+                <td>
+                  {search.from || f.from || "DEL"} -{" "}
+                  {search.to || f.to || "CCU"}
+                </td>
+                <td>
+                  Check-in: 15KG (1 piece only) | Cabin: Up to 7KG (1 piece
+                  allowed)
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <p className="baggage-note">
+            <strong>Hand Baggage Note:</strong> One hand bag up to 7 KG and 115
+            CM (L+W+H) max dimensions shall be allowed per customer. For a
+            contactless safe travel experience, we recommend to safely place it
+            under the seat in front of you on board.
+          </p>
+        </div>
+
+        <hr className="ticket-divider" />
+
+        {/* Terms, Conditions and Legal Notes */}
+        <div className="ticket-section legal-notes">
+          <h3>Note & Terms</h3>
+          <ol>
+            <li>
+              Goods and Services Tax (GST) shall be levied at applicable rates
+              on all air transportation services provided by IndiGo, except in
+              cases specifically exempted under law.
+            </li>
+            <li>
+              This is not a GST invoice. For GST details, please refer to the
+              final GST invoice which shall be sent to your registered email
+              address automatically.
+            </li>
+            <li>
+              Additionally, passengers may download the dynamic GST invoice copy
+              using their valid PNR reference number on the official website
+              www.goindigo.in.
+            </li>
+            <li>
+              Airfare Charges include Base Fare, Fuel Surcharge, Aviation
+              Security Fee, and User Development Fees wherever applicable.
+            </li>
+          </ol>
+        </div>
       </main>
     </div>
   );
 }
 
-function SeatPage({ booking, travellers, onSeats }) {
+function SeatPage({ search, booking, travellers, contact, promo, onSeats }) {
   const navigate = useNavigate();
   if (!booking.flight) return <Navigate to="/flights" replace />;
   return (
@@ -1519,6 +1778,10 @@ function SeatPage({ booking, travellers, onSeats }) {
       <Header />
       <Stepper active={2} />
       <SeatSelection
+        search={search}
+        booking={booking}
+        contact={contact}
+        promo={promo}
         travellerData={travellers}
         onBack={() => navigate("/review")}
         onContinue={(seats) => {
@@ -1547,7 +1810,14 @@ export default function BookingApp() {
     setTravellers((current) =>
       Array.from(
         { length: next.adults },
-        (_, i) => current[i] || { gender: "", first: "", last: "", dateOfBirth: "", nationality: "" },
+        (_, i) =>
+          current[i] || {
+            gender: "",
+            first: "",
+            last: "",
+            dateOfBirth: "",
+            nationality: "",
+          },
       ),
     );
   };
@@ -1555,7 +1825,14 @@ export default function BookingApp() {
     setConfirmation(data);
     localStorage.setItem(
       "YatraB2B-last-booking",
-      JSON.stringify({ ...data, search, booking, travellers, contact, selectedSeats }),
+      JSON.stringify({
+        ...data,
+        search,
+        booking,
+        travellers,
+        contact,
+        selectedSeats,
+      }),
     );
   };
   return (
@@ -1595,7 +1872,14 @@ export default function BookingApp() {
       <Route
         path="/seats"
         element={
-          <SeatPage booking={booking} travellers={travellers} onSeats={setSelectedSeats} />
+          <SeatPage
+            search={search}
+            booking={booking}
+            travellers={travellers}
+            contact={contact}
+            promo={promo}
+            onSeats={setSelectedSeats}
+          />
         }
       />
       <Route

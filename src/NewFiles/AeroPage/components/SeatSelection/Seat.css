@@ -5,11 +5,11 @@
 .seat {
   position: relative;
 
-  width: 42px;
-  height: 42px;
+  width: 34px;
+  height: 34px;
 
-  border-radius: 10px;
-  border: 2px solid #d8dee7;
+  border-radius: 4px;
+  border: 1px solid #b7c6d7;
 
   background: #ffffff;
 
@@ -29,7 +29,7 @@
 ------------------------ */
 
 .seat-id {
-  font-size: 13px;
+  font-size: 10px;
   font-weight: 700;
   color: #2b3440;
 }
@@ -48,7 +48,7 @@
 ------------------------ */
 
 .seat:focus-visible {
-  outline: 3px solid #1565c0;
+  outline: 3px solid #ff4b2b;
   outline-offset: 2px;
 }
 
@@ -61,7 +61,7 @@
 }
 
 .seat.available:hover {
-  border-color: #1565c0;
+  border-color: #ff4b2b;
 }
 
 /* -----------------------
@@ -69,8 +69,8 @@
 ------------------------ */
 
 .seat.selected {
-  background: #2e7d32;
-  border-color: #2e7d32;
+  background: #ff4b2b;
+  border-color: #ff4b2b;
 }
 
 .seat.selected .seat-id {
@@ -102,8 +102,8 @@
 }
 
 .seat.premium.selected {
-  background: #ffb300;
-  border-color: #ffb300;
+  background: #ff4b2b;
+  border-color: #ff4b2b;
 }
 
 .seat.premium.selected .seat-id {
@@ -120,8 +120,8 @@
 }
 
 .seat.exit.selected {
-  background: #e53935;
-  border-color: #e53935;
+  background: #ff4b2b;
+  border-color: #ff4b2b;
 }
 
 .seat.exit.selected .seat-id {
@@ -138,8 +138,8 @@
 }
 
 .seat.extra-legroom.selected {
-  background: #8e24aa;
-  border-color: #8e24aa;
+  background: #ff4b2b;
+  border-color: #ff4b2b;
 }
 
 .seat.extra-legroom.selected .seat-id {
@@ -162,9 +162,9 @@
   border-radius: 50%;
 
   background: white;
-  border: 2px solid #1565c0;
+  border: 2px solid #ff4b2b;
 
-  color: #1565c0;
+  color: #ff4b2b;
 
   display: flex;
   align-items: center;

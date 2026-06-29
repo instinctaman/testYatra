@@ -1,5 +1,9 @@
 .passenger-card {
-  padding: 22px;
+  padding: 10px;
+  border: 0;
+  border-radius: 0;
+  background: #f4faff;
+  box-shadow: none;
 }
 
 .passenger-header {
@@ -7,23 +11,24 @@
   justify-content: space-between;
   align-items: center;
 
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .passenger-header h2 {
-  font-size: 20px;
+  margin: 0;
+  font-size: 12px;
   color: #1b1f28;
 }
 
 .passenger-header span {
   color: #7c8696;
-  font-size: 14px;
+  font-size: 11px;
 }
 
 .passenger-list {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 8px;
 }
 
 .passenger-item {
@@ -31,10 +36,10 @@
   justify-content: space-between;
   align-items: center;
 
-  padding: 16px 18px;
+  padding: 10px;
 
-  border: 1px solid #dfe5ec;
-  border-radius: 14px;
+  border: 1px solid #0a72bd;
+  border-radius: 4px;
 
   cursor: pointer;
 
@@ -42,46 +47,46 @@
 }
 
 .passenger-item:hover {
-  border-color: #1565c0;
+  border-color: #ff4b2b;
   transform: translateY(-2px);
 }
 
 .active-passenger {
-  border-color: #1565c0;
-  background: #edf6ff;
+  border-color: #ff4b2b;
+  background: #fff3ef;
 }
 
 .passenger-left {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 8px;
 }
 
 .passenger-avatar {
-  width: 50px;
-  height: 50px;
+  width: 28px;
+  height: 28px;
 
   border-radius: 50%;
 
-  background: #1565c0;
+  background: #ff4b2b;
   color: white;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  font-size: 18px;
+  font-size: 12px;
 }
 
 .passenger-details h3 {
   margin: 0;
-  font-size: 17px;
+  font-size: 12px;
   color: #1b1f28;
 }
 
 .passenger-details span {
   color: #7c8696;
-  font-size: 14px;
+  font-size: 10px;
 }
 
 .passenger-right {
@@ -95,14 +100,14 @@
   align-items: center;
   gap: 8px;
 
-  background: #1565c0;
+  background: #ff4b2b;
   color: white;
 
-  padding: 8px 14px;
+  padding: 6px 10px;
 
-  border-radius: 25px;
+  border-radius: 16px;
 
-  font-size: 14px;
+  font-size: 11px;
   font-weight: 600;
 }
 

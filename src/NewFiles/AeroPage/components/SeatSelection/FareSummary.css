@@ -1,5 +1,6 @@
 .fare-summary {
-  padding: 18px;
+  padding: 16px;
+  border-radius: 4px;
 }
 
 .fare-header {
@@ -18,7 +19,7 @@
 }
 
 .fare-header svg {
-  color: #1565c0;
+  color: #ff4b2b;
 }
 
 .summary-section {
@@ -55,7 +56,7 @@
 }
 
 .summary-left svg {
-  color: #1565c0;
+  color: #ff4b2b;
 }
 
 .passenger-name {
@@ -80,7 +81,7 @@
   align-items: center;
   gap: 6px;
 
-  background: #1565c0;
+  background: #ff4b2b;
   color: white;
 
   padding: 6px 12px;
@@ -126,7 +127,7 @@
 }
 
 .addon-row {
-  color: #087dd1;
+  color: #ff4b2b;
 }
 
 .final-row {
@@ -137,7 +138,7 @@
 }
 
 .total-row strong {
-  color: #1565c0;
+  color: #ff4b2b;
 }
 
 .summary-footer {

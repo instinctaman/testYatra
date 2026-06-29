@@ -91,16 +91,12 @@
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  border: 2px solid #bbb;
+  border: 1px solid blue;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: border-color 0.18s;
   flex-shrink: 0;
-}
-
-.fsb-radio-circle-active { 
-  border-color: #c0392b; 
 }
 
 .fsb-radio-dot {
