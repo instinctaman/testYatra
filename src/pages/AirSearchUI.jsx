@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import api from "../services/api";
+
 import { useLocation } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
+import FilterPanel from "../components/FilterPanel";
 
 import heroBg from "../assets/ui/assets/img/bg/breadcrumb-04.jpg";
 // import brandLogo from "../assets/ui/assets/img/logo-dark.svg";
@@ -14,7 +17,7 @@ import homeTwelveImage from "../assets/ui/assets/img/menu/home-12.jpg";
 import userFourteen from "../assets/ui/assets/img/users/user-14.jpg";
 import userFifteen from "../assets/ui/assets/img/users/user-15.jpg";
 import userSixteen from "../assets/ui/assets/img/users/user-16.jpg";
-import FilterPanel from "../NewFiles/FilterPanel";
+// import FilterPanel from "../NewFiles/FilterPanel";
 import CategoryCards from "../cards/CategoryCards";
 
 import vistara from "../assets/images/vistara.jfif";
@@ -426,66 +429,79 @@ function FlightCard({ flight, selected, onSelect }) {
 }
 
 export default function AirSearchUI() {
-  const location = useLocation();
-  const searchData = location.state || {};
-  const [airlineFilter, setAirlineFilter] = useState("");
-  const [stopFilter, setStopFilter] = useState("all");
-  const [sortBy, setSortBy] = useState("");
-  const tripType = searchData?.tripType || "oneway";
-  const cabin = searchData?.cabin || "Economy";
-  const origin = searchData?.origin || "";
-  const destination = searchData?.destination || "";
-  const departureDate = searchData?.departureDate || "";
-  const returnDate = searchData?.returnDate || "";
-  const adults = searchData?.adults || 1;
-  const children = searchData?.children || 0;
-  const infants = searchData?.infants || 0;
+  const [searchParams] = useSearchParams();
+  const [filters, setFilters] = useState({
+    airline: "",
+    stops: "all",
+    sort: "",
+    maxPrice: 30000,
+    maxDuration: 1000,
+    departure: "",
+  });
+  const tripType = searchParams.get("tripType") || "One Way";
+  const cabin = searchParams.get("cabin") || "Economy";
+
+  const origin = searchParams.get("origin") || "";
+  const destination = searchParams.get("destination") || "";
+
+  const departureDate = searchParams.get("departure") || "";
+  const returnDate = searchParams.get("return") || "";
+
+  const adults = Number(searchParams.get("adults") || 1);
+  const children = Number(searchParams.get("children") || 0);
+  const infants = Number(searchParams.get("infants") || 0);
   const totalTravelers = adults + children + infants;
   const [selectedFlight, setSelectedFlight] = useState(null);
   const [flights, setFlights] = useState([]);
   const [loading, setLoading] = useState(true);
-  const filteredFlights = [...flights]
+  const filteredFlights = flights
     .filter((flight) => {
-      if (airlineFilter && flight.airline !== airlineFilter) {
+      if (filters.airline && flight.airline !== filters.airline) {
         return false;
       }
 
-      if (stopFilter === "nonstop" && flight.stops !== 0) {
+      if (filters.stops !== "all" && flight.stops !== Number(filters.stops)) {
         return false;
       }
 
-      if (stopFilter === "1stop" && flight.stops !== 1) {
+      if (flight.price > filters.maxPrice) {
+        return false;
+      }
+
+      if (flight.duration > filters.maxDuration) {
         return false;
       }
 
       return true;
     })
     .sort((a, b) => {
-      if (sortBy === "priceLow") {
-        return a.price - b.price;
-      }
+      if (filters.sort === "priceLow") return a.price - b.price;
 
-      if (sortBy === "priceHigh") {
-        return b.price - a.price;
-      }
+      if (filters.sort === "priceHigh") return b.price - a.price;
 
-      if (sortBy === "duration") {
-        return a.duration - b.duration;
-      }
+      if (filters.sort === "duration") return a.duration - b.duration;
 
       return 0;
     });
 
   const airlines = [...new Set(flights.map((flight) => flight.airline))];
+
   const fetchFlights = useCallback(async () => {
+  useEffect(() => {
+    if (!origin || !destination || !departureDate) {
+      return;
+    }
+
+    fetchFlights();
+  }, [origin, destination, departureDate]);
     try {
       const response = await api.post("/flight/search", {
-        origin: searchData.origin,
-        destination: searchData.destination,
-        departure_date: searchData.departureDate,
-        adults: searchData.adults,
-        children: searchData.children,
-        infants: searchData.infants,
+        origin,
+        destination,
+        departure_date: departureDate,
+        adults,
+        children,
+        infants,
       });
 
       setFlights(response.data);
@@ -550,57 +566,17 @@ export default function AirSearchUI() {
           </div>
         </div>
       </section>
-      <div className="row mb-4">
-        <div className="col-md-4">
-          <select
-            className="form-select"
-            value={airlineFilter}
-            onChange={(e) => setAirlineFilter(e.target.value)}
-          >
-            <option value="">All Airlines</option>
-
-            {airlines.map((airline) => (
-              <option key={airline} value={airline}>
-                {airline}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="col-md-4">
-          <select
-            className="form-select"
-            value={stopFilter}
-            onChange={(e) => setStopFilter(e.target.value)}
-          >
-            <option value="all">All Stops</option>
-
-            <option value="nonstop">Non Stop</option>
-
-            <option value="1stop">1 Stop</option>
-          </select>
-        </div>
-
-        <div className="col-md-4">
-          <select
-            className="form-select"
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-          >
-            <option value="">Sort By</option>
-
-            <option value="priceLow">Price Low → High</option>
-
-            <option value="priceHigh">Price High → Low</option>
-
-            <option value="duration">Duration</option>
-          </select>
-        </div>
-      </div>
       <section className="content airkit-results-section">
-        <div className="container">
+        <div className="container-fluid">
           <div className="row">
-            <div className="col-xl-12 col-lg-12">
+            <div className="col-lg-3">
+              <FilterPanel
+                flights={flights}
+                filters={filters}
+                setFilters={setFilters}
+              />
+            </div>
+            <div className="col-xl-9 col-lg-9">
               <div className="airkit-results-heading">
                 <div>
                   <span className="badge bg-primary mb-2">

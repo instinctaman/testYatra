@@ -441,19 +441,9 @@ export default function Landing() {
     }
   };
   const searchFlights = () => {
-    navigate("/air-search-ui", {
-      state: {
-        origin: fromAirport.code,
-        destination: toAirport.code,
-        departureDate,
-        returnDate,
-        adults: travelers.adults,
-        children: travelers.children,
-        infants: travelers.infants,
-        cabin,
-        tripType,
-      },
-    });
+    navigate(
+      `/air-search-ui?origin=${fromAirport.code}&destination=${toAirport.code}&departure=${departureDate}&tripType=${tripType}&adults=${travelers.adults}&children=${travelers.children}&infants=${travelers.infants}&cabin=${cabin}`,
+    );
   };
 
   return (
